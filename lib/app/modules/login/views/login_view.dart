@@ -50,7 +50,7 @@ class LoginView extends GetView<LoginController> {
                   Button(
                     title: 'Login',
                     onPressed: () {
-                      debugPrint('Login button pressed');
+                      Get.toNamed('/home');
                     },
                   ),
                 ],
