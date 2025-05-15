@@ -41,14 +41,13 @@ class HomeView extends GetView<HomeController> {
                   children: [
                     Text(
                       'Jhon Doe',
-                      style: Themes.titleStyle.copyWith(fontSize: 18),
+                      style: Themes.titleStyle.copyWith(fontSize: 20),
                     ),
                     Text('Manajer', style: Themes.bodyStyle),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 20),
             // Truck Image
             Center(
               child: Image.asset(
@@ -62,32 +61,37 @@ class HomeView extends GetView<HomeController> {
               height: 50,
               decoration: BoxDecoration(
                 color: Themes.primaryColor,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(24),
               ),
               child: Center(
                 child: Text(
                   'Truck Tracking',
-                  style: Themes.titleStyle.copyWith(color: Themes.whiteColor),
+                  style: Themes.titleStyle.copyWith(color: Themes.whiteColor, fontSize: 20),
                 ),
               ),
             ),
             // Grid View 2 Columns
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              childAspectRatio: 1.5,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              children: [
-                CardMenuHome(title: 'Data Kendaraan', icon: FeatherIcons.truck),
-                CardMenuHome(title: 'Total Pengiriman', icon: FeatherIcons.box),
-                CardMenuHome(title: 'Data Driver', icon: FeatherIcons.user),
-                CardMenuHome(
-                  title: 'Jadwal Pengiriman',
-                  icon: FeatherIcons.calendar,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  // shrinkWrap: true,
+                  // physics: const NeverScrollableScrollPhysics(),
+                  childAspectRatio: 1.4,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  children: [
+                    CardMenuHome(title: 'Data Kendaraan', icon: FeatherIcons.truck),
+                    CardMenuHome(title: 'Total Pengiriman', icon: FeatherIcons.box),
+                    CardMenuHome(title: 'Data Driver', icon: FeatherIcons.user),
+                    CardMenuHome(
+                      title: 'Jadwal Pengiriman',
+                      icon: FeatherIcons.calendar,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
         ),
@@ -122,7 +126,7 @@ class CardMenuHome extends StatelessWidget {
                 fontSize: 18,
               ),
             ),
-            Icon(icon ?? FeatherIcons.truck, size: 40, color: Themes.darkColor),
+            Icon(icon ?? FeatherIcons.truck, size: 38, color: Themes.darkColor),
           ],
         ),
       ),
