@@ -12,7 +12,7 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: Themes.basePadding,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -25,9 +25,8 @@ class LoginView extends GetView<LoginController> {
                 ),
                 Text(
                   'Selamat Datang di Aplikasi',
-                  style: Themes.headingStyle.copyWith(
+                  style: Themes.titleStyle.copyWith(
                     color: Themes.primaryColor,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
@@ -77,7 +76,7 @@ class InputField extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Themes.bodyStyle.copyWith(
+          style: Themes.subTitleStyle.copyWith(
             fontSize: 16,
             color: Themes.darkColor,
           ),

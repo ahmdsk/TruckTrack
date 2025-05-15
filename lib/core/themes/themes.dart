@@ -23,33 +23,45 @@ abstract class Themes {
     elevation: 0,
   );
 
+  static EdgeInsets basePadding = const EdgeInsets.symmetric(
+    horizontal: 20,
+    vertical: 10,
+  );
+
   static Radius baseCardRadius = const Radius.circular(16);
   static BorderRadius baseButtonBorderRadius = BorderRadius.circular(8);
   static BorderRadius baseCardBorderRadius = BorderRadius.circular(16);
 
-  static TextStyle baseTextStyle = GoogleFonts.plusJakartaSans().copyWith(
-    overflow: TextOverflow.ellipsis,
-    fontWeight: FontWeight.w100,
+  // Style Font
+  static TextStyle _style({
+    double? fontSize,
+    FontWeight? fontWeight,
+    Color? color,
+  }) {
+    return GoogleFonts.plusJakartaSans(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+    ).copyWith(overflow: TextOverflow.ellipsis);
+  }
+
+  static final baseTextStyle = _style(fontWeight: FontWeight.w400);
+
+  static final titleStyle = _style(
+    fontSize: 24,
+    fontWeight: FontWeight.w800,
+    color: Themes.darkColor,
   );
 
-  static TextStyle headingStyle = baseTextStyle.merge(
-    GoogleFonts.plusJakartaSans().copyWith(
-      fontSize: 24,
-      fontWeight: FontWeight.bold,
-    ),
+  static final subTitleStyle = _style(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: Themes.darkColor,
   );
 
-  static TextStyle titleStyle = baseTextStyle.merge(
-    GoogleFonts.plusJakartaSans().copyWith(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-    ),
-  );
-
-  static TextStyle bodyStyle = baseTextStyle.merge(
-    GoogleFonts.plusJakartaSans().copyWith(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-    ),
+  static final bodyStyle = _style(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: Themes.darkColor,
   );
 }
