@@ -66,7 +66,10 @@ class HomeView extends GetView<HomeController> {
               child: Center(
                 child: Text(
                   'Truck Tracking',
-                  style: Themes.titleStyle.copyWith(color: Themes.whiteColor, fontSize: 20),
+                  style: Themes.titleStyle.copyWith(
+                    color: Themes.whiteColor,
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ),
@@ -82,8 +85,14 @@ class HomeView extends GetView<HomeController> {
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
                   children: [
-                    CardMenuHome(title: 'Data Kendaraan', icon: FeatherIcons.truck),
-                    CardMenuHome(title: 'Total Pengiriman', icon: FeatherIcons.box),
+                    CardMenuHome(
+                      title: 'Data Kendaraan',
+                      icon: FeatherIcons.truck,
+                    ),
+                    CardMenuHome(
+                      title: 'Total Pengiriman',
+                      icon: FeatherIcons.box,
+                    ),
                     CardMenuHome(title: 'Data Driver', icon: FeatherIcons.user),
                     CardMenuHome(
                       title: 'Jadwal Pengiriman',
@@ -112,21 +121,47 @@ class CardMenuHome extends StatelessWidget {
     return ZoomTapAnimation(
       onTap: onTap ?? () => debugPrint('Card Menu $title'),
       child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
         decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Themes.primaryColor.withAlpha(40), // ~15% opacity
+              Themes.primaryColor.withAlpha(15), // ~5% opacity
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Themes.primaryColor, width: 2),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(15), // ~6% opacity
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+          border: Border.all(
+            color: Themes.primaryColor.withAlpha(128), // ~50% opacity
+            width: 1.5,
+          ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Icon(
+              icon ?? FeatherIcons.truck,
+              size: 42,
+              color: Themes.primaryColor,
+            ),
+            const SizedBox(height: 12),
             Text(
               title,
+              textAlign: TextAlign.center,
               style: Themes.titleStyle.copyWith(
-                color: Themes.darkColor.withAlpha(90),
-                fontSize: 18,
+                color: Themes.darkColor.withAlpha(200), // ~78% opacity
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
               ),
             ),
-            Icon(icon ?? FeatherIcons.truck, size: 38, color: Themes.darkColor),
           ],
         ),
       ),
