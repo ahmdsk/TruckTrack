@@ -26,9 +26,12 @@ class HomeView extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               spacing: 18,
               children: [
-                CircleAvatar(
-                  radius: 28,
-                  backgroundImage: AssetImage('assets/images/profile-pict.jpg'),
+                ZoomTapAnimation(
+                  onTap: () => Get.toNamed('/profile'),
+                  child: CircleAvatar(
+                    radius: 28,
+                    backgroundImage: AssetImage('assets/images/profile-pict.jpg'),
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

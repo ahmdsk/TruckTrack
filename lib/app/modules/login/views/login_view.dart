@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:truck_track/%20components/button.dart';
+import 'package:truck_track/components/button.dart';
+import 'package:truck_track/components/input.dart';
 import 'package:truck_track/core/themes/themes.dart';
 
 import '../controllers/login_controller.dart';
@@ -59,64 +60,6 @@ class LoginView extends GetView<LoginController> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class InputField extends StatelessWidget {
-  const InputField({super.key, required this.title, this.hintText});
-
-  final String title;
-  final String? hintText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: Themes.subTitleStyle.copyWith(
-            fontSize: 16,
-            color: Themes.darkColor,
-          ),
-        ),
-        SizedBox(height: 10),
-        TextFormField(
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 16,
-              horizontal: 20,
-            ),
-            hintText: hintText ?? 'Masukkan $title',
-            hintStyle: Themes.baseTextStyle.copyWith(
-              fontSize: 14,
-              color: Themes.darkColor,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: Themes.baseButtonBorderRadius,
-              borderSide: BorderSide(
-                color: Themes.primaryColor.withAlpha(70),
-                width: 2,
-              ),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: Themes.baseButtonBorderRadius,
-              borderSide: BorderSide(
-                color: Themes.primaryColor.withAlpha(70),
-                width: 2,
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: Themes.baseButtonBorderRadius,
-              borderSide: BorderSide(
-                color: Themes.primaryColor.withAlpha(80),
-                width: 3,
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
