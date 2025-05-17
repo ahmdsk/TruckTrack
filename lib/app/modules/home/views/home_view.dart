@@ -27,14 +27,8 @@ class HomeView extends GetView<HomeController> {
               spacing: 18,
               children: [
                 CircleAvatar(
-                  backgroundColor: Themes.primaryColor,
-                  minRadius: 30,
-                  maxRadius: 30,
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    width: 60,
-                    height: 60,
-                  ),
+                  radius: 28,
+                  backgroundImage: AssetImage('assets/images/profile-pict.jpg'),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
