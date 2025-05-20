@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
+import 'package:truck_track/app/controllers/auth_controller.dart';
 import 'package:truck_track/core/themes/themes.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
@@ -11,6 +12,9 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
+    final authController = Get.find<AuthController>();
+    debugPrint('AuthController: $authController');
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(
