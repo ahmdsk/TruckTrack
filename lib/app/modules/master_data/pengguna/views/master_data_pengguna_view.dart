@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
+import 'package:truck_track/core/themes/themes.dart';
 
 import '../controllers/master_data_pengguna_controller.dart';
 
@@ -10,14 +12,116 @@ class MasterDataPenggunaView extends GetView<MasterDataPenggunaController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MasterDataPenggunaView'),
+        title: Text(
+          'Kelola Pengguna',
+          style: Themes.subTitleStyle.copyWith(
+            color: Themes.darkColor,
+            fontSize: 18,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              debugPrint('Add Pengguna');
+            },
+            icon: Icon(
+              FeatherIcons.plus,
+              color: Themes.primaryColor,
+            ),
+          ),
+        ],
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'MasterDataPenggunaView is working',
-          style: TextStyle(fontSize: 20),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 10,
         ),
+        child: ListView.builder(
+          itemBuilder: (_, index) {
+            return ItemListPengguna();
+          },
+          itemCount: 10,
+        ),
+      ),
+    );
+  }
+}
+
+class ItemListPengguna extends StatelessWidget {
+  const ItemListPengguna({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20),
+      margin: EdgeInsets.symmetric(vertical: 6),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Themes.whiteColor,
+        boxShadow: [
+          BoxShadow(
+            color: Themes.darkColor.withAlpha(20), // Lebih transparan
+            blurRadius: 6, // Lebih menyebar
+            spreadRadius: 1, // Menyebar tipis
+            offset: const Offset(0, 2), // Lebih pendek bayangannya
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            spacing: 20,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                child: CircleAvatar(
+                  radius: 24,
+                  backgroundImage: AssetImage('assets/images/profile-pict.jpg'),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'User',
+                    style: Themes.titleStyle.copyWith(
+                      color: Themes.primaryColor,
+                      fontSize: 18,
+                      overflow: TextOverflow.ellipsis
+                    ),
+                  ),
+                  Text(
+                    'Manajer',
+                    style: Themes.subTitleStyle.copyWith(
+                      color: Themes.darkColor,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  FeatherIcons.edit,
+                  color: Themes.primaryColor,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  FeatherIcons.trash2,
+                  color: Themes.dangerColor,
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

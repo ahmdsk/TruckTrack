@@ -30,7 +30,9 @@ class HomeView extends GetView<HomeController> {
                   onTap: () => Get.toNamed('/profile'),
                   child: CircleAvatar(
                     radius: 28,
-                    backgroundImage: AssetImage('assets/images/profile-pict.jpg'),
+                    backgroundImage: AssetImage(
+                      'assets/images/profile-pict.jpg',
+                    ),
                   ),
                 ),
                 Column(
@@ -85,12 +87,17 @@ class HomeView extends GetView<HomeController> {
                     CardMenuHome(
                       title: 'Data Kendaraan',
                       icon: FeatherIcons.truck,
+                      onTap: () => Get.toNamed('/kendaraan'),
+                    ),
+                    CardMenuHome(
+                      title: 'Data Driver',
+                      icon: FeatherIcons.user,
+                      onTap: () => Get.toNamed('/pengguna'),
                     ),
                     CardMenuHome(
                       title: 'Total Pengiriman',
                       icon: FeatherIcons.box,
                     ),
-                    CardMenuHome(title: 'Data Driver', icon: FeatherIcons.user),
                     CardMenuHome(
                       title: 'Jadwal Pengiriman',
                       icon: FeatherIcons.calendar,
