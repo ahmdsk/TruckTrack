@@ -1,23 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:truck_track/app/modules/splash/controllers/splash_controller.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
+  SplashController splashController = Get.put(SplashController());
 
-  final count = 0.obs;
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void setUserData(Map<String, dynamic> user) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user', user.toString());
+    debugPrint('User data set: $user');
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

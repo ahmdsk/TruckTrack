@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.8
+  dio: ^5.8.0+1
   flutter:
     sdk: flutter
   flutter_feather_icons: ^2.0.0+1
@@ -38,6 +39,7 @@ dependencies:
   http: ^1.4.0
   latlong2: ^0.9.1
   mapbox_maps_flutter: ^2.8.0
+  shared_preferences: ^2.5.3
   zoom_tap_animation: ^1.1.0
 
 dev_dependencies:

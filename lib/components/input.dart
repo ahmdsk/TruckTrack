@@ -8,12 +8,14 @@ class InputField extends StatelessWidget {
     this.hintText,
     this.initialValue,
     this.largeText = false,
+    this.controller,
   });
 
   final String title;
   final String? hintText;
   final String? initialValue;
   final bool largeText;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class InputField extends StatelessWidget {
         ),
         SizedBox(height: 10),
         TextFormField(
+          controller: controller,
           initialValue: initialValue,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(

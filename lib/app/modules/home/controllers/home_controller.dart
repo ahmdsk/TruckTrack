@@ -1,23 +1,22 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:truck_track/app/data/api_client.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  var userData = {}.obs;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    fetchProfile();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<void> fetchProfile() async {
+    try {
+      final response = await ApiClient.dio.get('/me');
+      userData.value = response.data;
+    } catch (e) {
+      debugPrint('Error fetching profile: $e');
+    }
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
