@@ -1,19 +1,24 @@
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:truck_track/app/modules/splash/controllers/splash_controller.dart';
+import 'package:truck_track/service_locator.dart';
+import 'package:truck_track/services/auth_service.dart';
 
 class LoginController extends GetxController {
-  SplashController splashController = Get.put(SplashController());
+  final authService = sl<AuthService>();
 
   @override
   Future<void> onInit() async {
     super.onInit();
-  }
 
-  void setUserData(Map<String, dynamic> user) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('user', user.toString());
-    debugPrint('User data set: $user');
+    Future.delayed(const Duration(seconds: 2), () {
+      Future.microtask(() => {
+        if (authService.isLoggedIn && authService.currentUser != null) {
+          // If the user is already logged in, navigate to the home page
+          Get.offAllNamed('/home')
+        } else {
+          // If not logged in, navigate to the login page
+          Get.offAllNamed('/login')
+        }
+      });
+    });
   }
 }

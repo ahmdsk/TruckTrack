@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:truck_track/components/button.dart';
 import 'package:truck_track/components/input.dart';
 import 'package:truck_track/core/themes/themes.dart';
+import 'package:truck_track/service_locator.dart';
+import 'package:truck_track/services/auth_service.dart';
 
 import '../controllers/profile_controller.dart';
 
@@ -11,6 +13,8 @@ class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
   @override
   Widget build(BuildContext context) {
+    final authService = sl<AuthService>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -37,11 +41,11 @@ class ProfileView extends GetView<ProfileController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Jhon Doe',
+                  authService.currentUser?.name ?? '-',
                   style: Themes.titleStyle.copyWith(color: Themes.primaryColor),
                 ),
                 Text(
-                  'Manajer',
+                  authService.currentUser?.role?.toUpperCase() ?? '-',
                   style: Themes.subTitleStyle.copyWith(
                     color: Themes.darkColor,
                     fontSize: 16,
@@ -53,19 +57,19 @@ class ProfileView extends GetView<ProfileController> {
             InputField(
               title: 'Email',
               hintText: 'Masukkan email anda',
-              initialValue: 'admin@gmail.com',
+              initialValue: authService.currentUser?.email ?? '-',
             ),
             const SizedBox(height: 20),
             InputField(
               title: 'No. Telp',
               hintText: 'Masukkan no. telp anda',
-              initialValue: '081234567890',
+              initialValue: authService.currentUser?.noTelp ?? '-',
             ),
             const SizedBox(height: 20),
             InputField(
               title: 'Alamat',
               hintText: 'Masukkan alamat anda',
-              initialValue: 'Jl. Raya No. 123, Jakarta',
+              initialValue: authService.currentUser?.alamat ?? '-',
               largeText: true,
             ),
             const SizedBox(height: 20),

@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:truck_track/service_locator.dart';
+import 'package:truck_track/services/auth_service.dart';
 
 class SplashController extends GetxController {
+  final authService = sl<AuthService>();
+
   @override
   void onInit() {
     super.onInit();
@@ -9,16 +12,14 @@ class SplashController extends GetxController {
 
     // Simulate a delay for splash screen
     Future.delayed(const Duration(seconds: 2), () {
-      // Navigate to the login page after the delay
-      checkToken();
+      Future.microtask(() => checkToken());
     });
   }
 
   void checkToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('access_token');
+    await authService.loadUser();
 
-    if (token != null) {
+    if (authService.isLoggedIn && authService.currentUser != null) {
       Get.offAllNamed('/home');
     } else {
       Get.offAllNamed('/login');

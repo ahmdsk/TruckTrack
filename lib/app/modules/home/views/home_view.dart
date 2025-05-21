@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
-import 'package:truck_track/app/controllers/auth_controller.dart';
 import 'package:truck_track/core/themes/themes.dart';
+import 'package:truck_track/service_locator.dart';
+import 'package:truck_track/services/auth_service.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 import '../controllers/home_controller.dart';
@@ -12,8 +13,9 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
-    final authController = Get.find<AuthController>();
-    debugPrint('AuthController: $authController');
+    final authService = sl<AuthService>();
+    final user = authService.currentUser;
+    debugPrint("User: ${user?.name}");
 
     return Scaffold(
       body: Padding(
@@ -43,10 +45,10 @@ class HomeView extends GetView<HomeController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Jhon Doe',
+                      user?.name ?? '-',
                       style: Themes.titleStyle.copyWith(fontSize: 20),
                     ),
-                    Text('Manajer', style: Themes.bodyStyle),
+                    Text(user?.role ?? '-', style: Themes.bodyStyle),
                   ],
                 ),
               ],
