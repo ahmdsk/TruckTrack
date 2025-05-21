@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
+import 'package:truck_track/components/snackbar.dart';
 import 'package:truck_track/core/themes/themes.dart';
 import 'package:truck_track/service_locator.dart';
 import 'package:truck_track/services/auth_service.dart';
@@ -29,27 +30,56 @@ class HomeView extends GetView<HomeController> {
           children: [
             // Header
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              spacing: 18,
               children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 18,
+                  children: [
+                    ZoomTapAnimation(
+                      onTap: () => Get.toNamed('/profile'),
+                      child: CircleAvatar(
+                        radius: 28,
+                        backgroundImage: AssetImage(
+                          'assets/images/profile-pict.jpg',
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          user?.name ?? '-',
+                          style: Themes.titleStyle.copyWith(fontSize: 20),
+                        ),
+                        Text(user?.role ?? '-', style: Themes.bodyStyle),
+                      ],
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                // Logout Button
                 ZoomTapAnimation(
-                  onTap: () => Get.toNamed('/profile'),
-                  child: CircleAvatar(
-                    radius: 28,
-                    backgroundImage: AssetImage(
-                      'assets/images/profile-pict.jpg',
+                  onTap: () async {
+                    await authService.logout();
+
+                    if (!authService.isLoggedIn) {
+                      Get.offAllNamed('/login');
+                    } else {
+                      showCustomSnackbar(title: 'Gagal', message: 'Gagal logout');
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Themes.primaryColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      FeatherIcons.logOut,
+                      color: Themes.whiteColor,
+                      size: 24,
                     ),
                   ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      user?.name ?? '-',
-                      style: Themes.titleStyle.copyWith(fontSize: 20),
-                    ),
-                    Text(user?.role ?? '-', style: Themes.bodyStyle),
-                  ],
                 ),
               ],
             ),

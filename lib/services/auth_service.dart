@@ -94,6 +94,9 @@ class AuthService {
 
   Future<void> logout() async {
     await prefs.clear();
+
+    // Clear current user
+    _currentUser = null;
   }
 
   bool get isLoggedIn => prefs.getString('access_token') != null;

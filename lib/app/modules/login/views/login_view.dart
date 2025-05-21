@@ -16,8 +16,8 @@ class LoginView extends GetView<LoginController> {
     controller.onInit();
 
     final authC = Get.find<AuthController>();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
+    final emailController = TextEditingController(text: 'ahmad@test.com');
+    final passwordController = TextEditingController(text: '12345');
 
     return Scaffold(
       body: Padding(
