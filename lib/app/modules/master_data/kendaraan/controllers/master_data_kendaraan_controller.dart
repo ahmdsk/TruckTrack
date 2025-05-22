@@ -1,23 +1,18 @@
 import 'package:get/get.dart';
+import 'package:truck_track/app/models/kendaraan.dart';
+import 'package:truck_track/service_locator.dart';
+import 'package:truck_track/services/kendaraan_service.dart';
 
 class MasterDataKendaraanController extends GetxController {
-  //TODO: Implement MasterDataKendaraanController
+  final listKendaraan = <Kendaraan>[].obs;
 
-  final count = 0.obs;
+  final kendaraanService = sl<KendaraanService>();
+
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
+    final kendaraan = await kendaraanService.getKendaraan();
+    listKendaraan.assignAll(kendaraan);
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

@@ -1,8 +1,12 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:truck_track/app/models/user.dart';
+import 'package:truck_track/app/routes/app_pages.dart';
+import 'package:truck_track/components/snackbar.dart';
 
 class AuthService {
   final Dio dio;
@@ -26,14 +30,13 @@ class AuthService {
       InterceptorsWrapper(
         onError: (e, handler) async {
           if (e.response?.statusCode == 401 || currentUser == null) {
-            final success = await refreshToken();
-            if (success) {
-              final retry = e.requestOptions;
-              retry.headers['Authorization'] =
-                  'Bearer ${prefs.getString('access_token')}';
-              final res = await dio.fetch(retry);
-              return handler.resolve(res);
-            }
+            debugPrint('Token Kamu Expired, Silahkan Login Kembali');
+            // await logout();
+
+            showCustomSnackbar(title: 'Token Expired', message: 'Token Kamu Expired, Silahkan Login Kembali');
+            await logout();
+
+            Get.offAllNamed(Routes.LOGIN);
           }
           return handler.next(e);
         },

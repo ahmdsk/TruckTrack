@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
+import 'package:truck_track/app/models/kendaraan.dart';
+import 'package:truck_track/components/not_found_data.dart';
 import 'package:truck_track/core/themes/themes.dart';
 
 import '../controllers/master_data_kendaraan_controller.dart';
@@ -24,24 +26,25 @@ class MasterDataKendaraanView extends GetView<MasterDataKendaraanController> {
             onPressed: () {
               debugPrint('Add Kendaraan');
             },
-            icon: Icon(
-              FeatherIcons.plus,
-              color: Themes.primaryColor,
-            ),
+            icon: Icon(FeatherIcons.plus, color: Themes.primaryColor),
           ),
         ],
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
-        ),
-        child: ListView.builder(
-          itemBuilder: (_, index) {
-            return ItemListKendaraan();
-          },
-          itemCount: 10,
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Obx(
+          () =>
+              controller.listKendaraan.isEmpty
+                  ? const NotFoundData()
+                  : ListView.builder(
+                    itemCount: controller.listKendaraan.length,
+                    itemBuilder: (context, index) {
+                      return ItemListKendaraan(
+                        kendaraan: controller.listKendaraan[index],
+                      );
+                    },
+                  ),
         ),
       ),
     );
@@ -49,7 +52,9 @@ class MasterDataKendaraanView extends GetView<MasterDataKendaraanController> {
 }
 
 class ItemListKendaraan extends StatelessWidget {
-  const ItemListKendaraan({super.key});
+  const ItemListKendaraan({super.key, required this.kendaraan});
+
+  final Kendaraan kendaraan;
 
   @override
   Widget build(BuildContext context) {
@@ -85,15 +90,15 @@ class ItemListKendaraan extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Truck 1234',
+                    kendaraan.jenisKendaraan,
                     style: Themes.titleStyle.copyWith(
                       color: Themes.primaryColor,
                       fontSize: 18,
-                      overflow: TextOverflow.ellipsis
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Text(
-                    'Kendaraan Truck',
+                    kendaraan.noPolisi,
                     style: Themes.subTitleStyle.copyWith(
                       color: Themes.darkColor,
                       fontSize: 14,
@@ -107,17 +112,11 @@ class ItemListKendaraan extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {},
-                icon: Icon(
-                  FeatherIcons.edit,
-                  color: Themes.primaryColor,
-                ),
+                icon: Icon(FeatherIcons.edit, color: Themes.primaryColor),
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(
-                  FeatherIcons.trash2,
-                  color: Themes.dangerColor,
-                ),
+                icon: Icon(FeatherIcons.trash2, color: Themes.dangerColor),
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:truck_track/components/snackbar.dart';
 
 class ApiClient {
   static final Dio dio = Dio(
@@ -29,6 +30,10 @@ class ApiClient {
           return handler.next(options);
         },
         onError: (DioException error, handler) async {
+          showCustomSnackbar(title: 'Terjadi Kesalahan', message: error.message.toString());
+
+          print('Ada Error DIO Nya: ${error.message}');
+
           if (error.response?.statusCode == 401) {
             final success = await _refreshToken();
             if (success) {
