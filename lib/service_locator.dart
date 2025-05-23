@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:truck_track/app/data/api_client.dart';
 import 'package:truck_track/services/kendaraan_service.dart';
+import 'package:truck_track/services/user_service.dart';
 import 'services/auth_service.dart';
 
 final sl = GetIt.instance;
@@ -16,4 +17,5 @@ Future<void> setupLocator() async {
   // Register AuthService (custom service wrapper)
   sl.registerSingleton<AuthService>(AuthService(sl(), sl())); // dio & prefs
   sl.registerSingleton<KendaraanService>(KendaraanService());
+  sl.registerSingleton<UserService>(UserService());
 }

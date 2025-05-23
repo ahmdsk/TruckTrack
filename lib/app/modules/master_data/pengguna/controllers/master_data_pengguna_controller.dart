@@ -1,23 +1,18 @@
 import 'package:get/get.dart';
+import 'package:truck_track/app/models/user.dart';
+import 'package:truck_track/service_locator.dart';
+import 'package:truck_track/services/user_service.dart';
 
 class MasterDataPenggunaController extends GetxController {
-  //TODO: Implement MasterDataPenggunaController
+  final listUsers = <User>[].obs;
 
-  final count = 0.obs;
+  final userService = sl<UserService>();
+
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
+    final users = await userService.getAllByRoles(UserRole.driver);
+    listUsers.assignAll(users);
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

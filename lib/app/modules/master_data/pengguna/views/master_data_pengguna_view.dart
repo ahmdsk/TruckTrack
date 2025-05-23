@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
+import 'package:truck_track/app/models/user.dart';
+import 'package:truck_track/components/not_found_data.dart';
 import 'package:truck_track/core/themes/themes.dart';
 
 import '../controllers/master_data_pengguna_controller.dart';
@@ -24,24 +26,25 @@ class MasterDataPenggunaView extends GetView<MasterDataPenggunaController> {
             onPressed: () {
               debugPrint('Add Pengguna');
             },
-            icon: Icon(
-              FeatherIcons.plus,
-              color: Themes.primaryColor,
-            ),
+            icon: Icon(FeatherIcons.plus, color: Themes.primaryColor),
           ),
         ],
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
-        ),
-        child: ListView.builder(
-          itemBuilder: (_, index) {
-            return ItemListPengguna();
-          },
-          itemCount: 10,
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Obx(
+          () =>
+              controller.listUsers.isEmpty
+                  ? const NotFoundData()
+                  : ListView.builder(
+                    itemCount: controller.listUsers.length,
+                    itemBuilder: (context, index) {
+                      return ItemListPengguna(
+                        user: controller.listUsers[index],
+                      );
+                    },
+                  ),
         ),
       ),
     );
@@ -49,7 +52,9 @@ class MasterDataPenggunaView extends GetView<MasterDataPenggunaController> {
 }
 
 class ItemListPengguna extends StatelessWidget {
-  const ItemListPengguna({super.key});
+  const ItemListPengguna({super.key, required this.user});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -85,15 +90,15 @@ class ItemListPengguna extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'User',
+                    user.name ?? '-',
                     style: Themes.titleStyle.copyWith(
                       color: Themes.primaryColor,
                       fontSize: 18,
-                      overflow: TextOverflow.ellipsis
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Text(
-                    'Manajer',
+                    user.role.toString().toUpperCase(),
                     style: Themes.subTitleStyle.copyWith(
                       color: Themes.darkColor,
                       fontSize: 14,
@@ -107,17 +112,11 @@ class ItemListPengguna extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {},
-                icon: Icon(
-                  FeatherIcons.edit,
-                  color: Themes.primaryColor,
-                ),
+                icon: Icon(FeatherIcons.edit, color: Themes.primaryColor),
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(
-                  FeatherIcons.trash2,
-                  color: Themes.dangerColor,
-                ),
+                icon: Icon(FeatherIcons.trash2, color: Themes.dangerColor),
               ),
             ],
           ),
