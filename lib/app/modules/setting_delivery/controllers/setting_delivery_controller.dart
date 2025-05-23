@@ -1,23 +1,18 @@
 import 'package:get/get.dart';
+import 'package:truck_track/app/models/pesanan.dart';
+import 'package:truck_track/service_locator.dart';
+import 'package:truck_track/services/delivery_service.dart';
 
 class SettingDeliveryController extends GetxController {
-  //TODO: Implement SettingDeliveryController
+  final listDeliverys = <Pesanan>[].obs;
 
-  final count = 0.obs;
+  final deliveryService = sl<DeliveryService>();
+
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
+    final users = await deliveryService.getPesanan();
+    listDeliverys.assignAll(users);
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

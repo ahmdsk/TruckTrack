@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:truck_track/app/models/pesanan.dart';
+import 'package:truck_track/components/not_found_data.dart';
 import 'package:truck_track/core/themes/themes.dart';
 
 import '../controllers/setting_delivery_controller.dart';
@@ -20,18 +22,25 @@ class SettingDeliveryView extends GetView<SettingDeliveryController> {
           ),
         ),
       ),
-      body: ListView.builder(
-        itemBuilder: (_, index) {
-          return const PengirimanCard();
-        },
-        itemCount: 10,
+      body: Obx(
+        () =>
+            controller.listDeliverys.isEmpty
+                ? const NotFoundData()
+                : ListView.builder(
+                  itemCount: controller.listDeliverys.length,
+                  itemBuilder: (context, index) {
+                    return PengirimanCard(pesanan: controller.listDeliverys[index]);
+                  },
+                ),
       ),
     );
   }
 }
 
 class PengirimanCard extends StatelessWidget {
-  const PengirimanCard({super.key});
+  const PengirimanCard({super.key, required this.pesanan});
+
+  final Pesanan pesanan;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +69,7 @@ class PengirimanCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'PESANAN-001',
+                  pesanan.noPesanan,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -68,8 +77,11 @@ class PengirimanCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  formatter.format(DateTime.parse('2025-05-19 17:01:14')),
-                  style: TextStyle(fontSize: 13, color: Themes.darkColor.withAlpha(150)),
+                  formatter.format(DateTime.parse(pesanan.tanggalPesanan.toString())),
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Themes.darkColor.withAlpha(150),
+                  ),
                 ),
               ],
             ),
@@ -82,12 +94,12 @@ class PengirimanCard extends StatelessWidget {
                 color: Themes.primaryColor.withAlpha(60),
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: const Text(
-                'MENUNGGU',
+              child: Text(
+                pesanan.statusPesanan.toUpperCase(),
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: Colors.orange,
+                  color: Themes.primaryColor,
                   letterSpacing: 0.5,
                 ),
               ),
@@ -97,9 +109,13 @@ class PengirimanCard extends StatelessWidget {
             // Jenis dan Volume BBM
             Row(
               children: [
-                Icon(Icons.local_gas_station, size: 18, color: Themes.darkColor.withAlpha(120)),
+                Icon(
+                  Icons.local_gas_station,
+                  size: 18,
+                  color: Themes.darkColor.withAlpha(120),
+                ),
                 SizedBox(width: 8),
-                Text('Pertalite • 100 Liter'),
+                Text('${pesanan.jenisBbm} • ${pesanan.volumeBbm} Liter'),
               ],
             ),
             const SizedBox(height: 10),
@@ -107,9 +123,13 @@ class PengirimanCard extends StatelessWidget {
             // Alamat
             Row(
               children: [
-                Icon(Icons.location_on, size: 18, color: Themes.darkColor.withAlpha(120)),
+                Icon(
+                  Icons.location_on,
+                  size: 18,
+                  color: Themes.darkColor.withAlpha(120),
+                ),
                 SizedBox(width: 8),
-                Expanded(child: Text('Jl. Raya No. 1, Jakarta')),
+                Expanded(child: Text(pesanan.alamatPengiriman ?? '-')),
               ],
             ),
             const SizedBox(height: 10),
@@ -117,10 +137,14 @@ class PengirimanCard extends StatelessWidget {
             // Driver dan Customer
             Row(
               children: [
-                Icon(Icons.person_outline, size: 18, color: Themes.darkColor.withAlpha(120)),
+                Icon(
+                  Icons.person_outline,
+                  size: 18,
+                  color: Themes.darkColor.withAlpha(120),
+                ),
                 SizedBox(width: 8),
                 Expanded(
-                  child: Text('Driver: Driver 1 | Customer: Costumer 1'),
+                  child: Text('Driver: ${pesanan.driver?.name ?? '-'} | Customer: ${pesanan.costumer?.name ?? '-'}'),
                 ),
               ],
             ),
@@ -138,7 +162,7 @@ class PengirimanCard extends StatelessWidget {
                     icon: Icons.edit,
                     color: Colors.blueAccent,
                     onTap: () {
-                      // TODO: Aksi edit
+                      debugPrint('Edit ${pesanan.noPesanan}');
                     },
                   ),
                 ),
@@ -146,9 +170,9 @@ class PengirimanCard extends StatelessWidget {
                   child: _ActionButton(
                     label: 'Hapus',
                     icon: Icons.delete,
-                    color: Colors.redAccent,
+                    color: Themes.dangerColor,
                     onTap: () {
-                      // TODO: Aksi hapus
+                      debugPrint('Hapus ${pesanan.noPesanan}');
                     },
                   ),
                 ),
@@ -156,9 +180,9 @@ class PengirimanCard extends StatelessWidget {
                   child: _ActionButton(
                     label: 'Atur',
                     icon: Icons.settings,
-                    color: Colors.deepOrange,
+                    color: Themes.successColor,
                     onTap: () {
-                      // TODO: Aksi atur
+                      debugPrint('Atur ${pesanan.noPesanan}');
                     },
                   ),
                 ),
@@ -191,9 +215,7 @@ class _ActionButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         backgroundColor: color.withOpacity(0.1),
         foregroundColor: color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
       onPressed: onTap,
       icon: Icon(icon, size: 18),
