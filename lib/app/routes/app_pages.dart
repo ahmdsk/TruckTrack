@@ -12,6 +12,8 @@ import '../modules/master_data/pengguna/bindings/master_data_pengguna_binding.da
 import '../modules/master_data/pengguna/views/master_data_pengguna_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/setting_delivery/bindings/setting_delivery_binding.dart';
+import '../modules/setting_delivery/views/setting_delivery_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.MASTER_DATA_PENGGUNA,
       page: () => const MasterDataPenggunaView(),
       binding: MasterDataPenggunaBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTING_DELIVERY,
+      page: () => const SettingDeliveryView(),
+      binding: SettingDeliveryBinding(),
     ),
   ];
 }

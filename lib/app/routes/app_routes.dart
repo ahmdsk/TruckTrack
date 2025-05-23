@@ -10,6 +10,7 @@ abstract class Routes {
   static const MASTER_DATA_KENDARAAN = _Paths.MASTER_DATA_KENDARAAN;
   static const MASTER_DATA_PENGGUNA = _Paths.MASTER_DATA_PENGGUNA;
   static const SPLASH = _Paths.SPLASH;
+  static const SETTING_DELIVERY = _Paths.SETTING_DELIVERY;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const MASTER_DATA_KENDARAAN = '/kendaraan';
   static const MASTER_DATA_PENGGUNA = '/pengguna';
   static const SPLASH = '/splash';
+  static const SETTING_DELIVERY = '/setting-delivery';
 }
