@@ -51,7 +51,7 @@ class HomeView extends GetView<HomeController> {
                           user?.name ?? '-',
                           style: Themes.titleStyle.copyWith(fontSize: 20),
                         ),
-                        Text(user?.role ?? '-', style: Themes.bodyStyle),
+                        Text(user?.role?.toUpperCase() ?? '-', style: Themes.bodyStyle),
                       ],
                     ),
                   ],

@@ -3,6 +3,9 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
 import 'package:truck_track/app/models/user.dart';
+import 'package:truck_track/components/confirmation_dialog.dart';
+import 'package:truck_track/components/dropdown.dart';
+import 'package:truck_track/components/input.dart';
 import 'package:truck_track/components/not_found_data.dart';
 import 'package:truck_track/core/themes/themes.dart';
 
@@ -24,7 +27,20 @@ class MasterDataPenggunaView extends GetView<MasterDataPenggunaController> {
         actions: [
           IconButton(
             onPressed: () {
-              debugPrint('Add Pengguna');
+              Get.bottomSheet(
+                isScrollControlled: true,
+                Container(
+                  height: Get.height * 0.8,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Themes.whiteColor,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
+                  ),
+                  child: SingleChildScrollView(child: FormKelolaPengguna()),
+                ),
+              );
             },
             icon: Icon(FeatherIcons.plus, color: Themes.primaryColor),
           ),
@@ -111,17 +127,135 @@ class ItemListPengguna extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.bottomSheet(
+                    isScrollControlled: true,
+                    Container(
+                      height: Get.height * 0.8,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Themes.whiteColor,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      child: SingleChildScrollView(
+                        child: FormKelolaPengguna(user: user),
+                      ),
+                    ),
+                  );
+                },
                 icon: Icon(FeatherIcons.edit, color: Themes.primaryColor),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  ConfirmationDialog.show(
+                    title: 'Hapus Pengguna',
+                    description:
+                        'Apakah anda yakin ingin menghapus pengguna ini?',
+                    onConfirm: () {
+                      // Lanjutkan proses penghapusan di sini
+                      final controller =
+                          Get.find<MasterDataPenggunaController>();
+                      controller.deleteUser(user.id);
+                    },
+                  );
+                },
                 icon: Icon(FeatherIcons.trash2, color: Themes.dangerColor),
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class FormKelolaPengguna extends StatelessWidget {
+  const FormKelolaPengguna({super.key, this.user});
+
+  final User? user;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<MasterDataPenggunaController>();
+
+    // isi form jika dalam mode edit
+    if (user != null) {
+      controller.nameController.text = user!.name ?? '';
+      controller.emailController.text = user!.email ?? '';
+      controller.selectedRole.value = user!.role ?? '';
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          user != null ? 'Edit Pengguna' : 'Tambah Pengguna',
+          style: Themes.titleStyle.copyWith(
+            color: Themes.primaryColor,
+            fontSize: 18,
+          ),
+        ),
+
+        const SizedBox(height: 20),
+        InputField(
+          title: 'Nama Pengguna',
+          hintText: 'Contoh: Jhon Doe',
+          controller: controller.nameController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'Email',
+          hintText: 'Contoh: jhondoe@test.com',
+          controller: controller.emailController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'Password',
+          hintText: 'Masukkan password',
+          controller: controller.passwordController,
+          isPassword: true,
+        ),
+        const SizedBox(height: 20),
+        Dropdown<String>(
+          title: 'Pilih Role',
+          hintText: 'Pilih salah satu role',
+          value: controller.selectedRole.value,
+          onChanged: (val) => controller.selectedRole.value = val,
+          items:
+              controller.roleOptions
+                  .map(
+                    (role) => DropdownMenuItem(value: role, child: Text(role)),
+                  )
+                  .toList(),
+        ),
+        const SizedBox(height: 20),
+        SizedBox(
+          width: Get.width,
+          child: ElevatedButton(
+            onPressed: () {
+              user != null
+                  ? controller.updateUser(user!.id.toString())
+                  : controller.addUser();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Themes.primaryColor,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            child: Text(
+              user != null ? 'Update' : 'Simpan',
+              style: Themes.bodyStyle.copyWith(
+                color: Themes.whiteColor,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
