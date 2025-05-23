@@ -36,23 +36,65 @@ class MasterDataKendaraanController extends GetxController {
 
   // Method untuk submit data ke API
   Future<void> addKendaraan() async {
-    // try {
-      final newKendaraan = {
-        'id_driver': selectedDriver.value?.id,
-        'no_polisi': noPolisiController.text,
-        'jenis_kendaraan': jenisKendaraanController.text,
-        'kapasitas_tangki': kapasitasTangkiController.text,
-        'no_segel': noSegelController.text,
-      };
+    final newKendaraan = {
+      'id_driver': selectedDriver.value?.id,
+      'no_polisi': noPolisiController.text,
+      'jenis_kendaraan': jenisKendaraanController.text,
+      'kapasitas_tangki': kapasitasTangkiController.text,
+      'no_segel': noSegelController.text,
+    };
 
-      await kendaraanService.addKendaraan(newKendaraan);
-      Get.back(); // tutup modal/bottomsheet
-      showCustomSnackbar(title: 'Sukses', message: 'Kendaraan berhasil ditambahkan');
-      // refresh list
-      final kendaraan = await kendaraanService.getKendaraan();
-      listKendaraan.assignAll(kendaraan);
-    // } catch (e) {
-    //   showCustomSnackbar(title: 'Gagal', message: 'Kendaraan gagal ditambahkan: $e');
-    // }
+    await kendaraanService.addKendaraan(newKendaraan);
+    Get.back(); // tutup modal/bottomsheet
+    showCustomSnackbar(
+      title: 'Sukses',
+      message: 'Kendaraan berhasil ditambahkan',
+    );
+    // refresh list
+    final kendaraan = await kendaraanService.getKendaraan();
+    listKendaraan.assignAll(kendaraan);
+  }
+
+  // Method untuk menghapus kendaraan
+  Future<void> deleteKendaraan(int id) async {
+    await kendaraanService.deleteKendaraan(id.toString());
+    showCustomSnackbar(title: 'Sukses', message: 'Kendaraan berhasil dihapus');
+
+    // refresh list
+    final kendaraan = await kendaraanService.getKendaraan();
+    listKendaraan.assignAll(kendaraan);
+
+    // Clear semua controller
+    clearForm();
+  }
+
+  // Method untuk mengupdate kendaraan
+  Future<void> updateKendaraan(int id) async {
+    final updatedKendaraan = {
+      'id_driver': selectedDriver.value?.id,
+      'no_polisi': noPolisiController.text,
+      'jenis_kendaraan': jenisKendaraanController.text,
+      'kapasitas_tangki': kapasitasTangkiController.text,
+      'no_segel': noSegelController.text,
+    };
+
+    await kendaraanService.updateKendaraan(id.toString(), updatedKendaraan);
+    Get.back(); // tutup modal/bottomsheet
+    showCustomSnackbar(title: 'Sukses', message: 'Kendaraan berhasil diupdate');
+
+    // refresh list
+    final kendaraan = await kendaraanService.getKendaraan();
+    listKendaraan.assignAll(kendaraan);
+
+    // Clear semua controller
+    clearForm();
+  }
+
+  void clearForm() {
+    selectedDriver.value = null;
+    noPolisiController.clear();
+    jenisKendaraanController.clear();
+    kapasitasTangkiController.clear();
+    noSegelController.clear();
   }
 }

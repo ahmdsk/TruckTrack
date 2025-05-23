@@ -4,6 +4,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
 import 'package:truck_track/app/models/kendaraan.dart';
 import 'package:truck_track/app/models/user.dart';
+import 'package:truck_track/components/confirmation_dialog.dart';
 import 'package:truck_track/components/dropdown.dart';
 import 'package:truck_track/components/input.dart';
 import 'package:truck_track/components/not_found_data.dart';
@@ -31,20 +32,12 @@ class MasterDataKendaraanView extends GetView<MasterDataKendaraanController> {
                 isScrollControlled: true,
                 Container(
                   height: Get.height * 0.8,
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: Themes.whiteColor,
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(20),
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Themes.darkColor.withAlpha(20),
-                        blurRadius: 6,
-                        spreadRadius: 1,
-                        offset: const Offset(0, -2),
-                      ),
-                    ],
                   ),
                   child: SingleChildScrollView(child: FormKelolaKendaraan()),
                 ),
@@ -76,17 +69,30 @@ class MasterDataKendaraanView extends GetView<MasterDataKendaraanController> {
 }
 
 class FormKelolaKendaraan extends StatelessWidget {
-  const FormKelolaKendaraan({super.key});
+  const FormKelolaKendaraan({super.key, this.kendaraan});
+
+  final Kendaraan? kendaraan;
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<MasterDataKendaraanController>();
 
+    // isi form jika dalam mode edit
+    if (kendaraan != null) {
+      controller.selectedDriver.value = controller.listDrivers.firstWhereOrNull(
+        (e) => e.id == kendaraan!.idDriver,
+      );
+      controller.noPolisiController.text = kendaraan!.noPolisi;
+      controller.jenisKendaraanController.text = kendaraan!.jenisKendaraan;
+      controller.kapasitasTangkiController.text = kendaraan!.kapasitasTangki;
+      controller.noSegelController.text = kendaraan!.noSegel;
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'Tambah Kendaraan',
+          kendaraan != null ? 'Edit Kendaraan' : 'Tambah Kendaraan',
           style: Themes.titleStyle.copyWith(
             color: Themes.primaryColor,
             fontSize: 18,
@@ -141,7 +147,11 @@ class FormKelolaKendaraan extends StatelessWidget {
         SizedBox(
           width: Get.width,
           child: ElevatedButton(
-            onPressed: () => controller.addKendaraan(),
+            onPressed: () {
+              kendaraan != null
+                  ? controller.updateKendaraan(kendaraan!.id)
+                  : controller.addKendaraan();
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Themes.primaryColor,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -150,7 +160,7 @@ class FormKelolaKendaraan extends StatelessWidget {
               ),
             ),
             child: Text(
-              'Simpan',
+              kendaraan != null ? 'Update' : 'Simpan',
               style: Themes.bodyStyle.copyWith(
                 color: Themes.whiteColor,
                 fontSize: 16,
@@ -223,11 +233,40 @@ class ItemListKendaraan extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.bottomSheet(
+                    isScrollControlled: true,
+                    Container(
+                      height: Get.height * 0.8,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Themes.whiteColor,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      child: SingleChildScrollView(
+                        child: FormKelolaKendaraan(kendaraan: kendaraan),
+                      ),
+                    ),
+                  );
+                },
                 icon: Icon(FeatherIcons.edit, color: Themes.primaryColor),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  ConfirmationDialog.show(
+                    title: 'Hapus Kendaraan',
+                    description:
+                        'Apakah anda yakin ingin menghapus kendaraan ini?',
+                    onConfirm: () {
+                      // Lanjutkan proses penghapusan di sini
+                      final controller =
+                          Get.find<MasterDataKendaraanController>();
+                      controller.deleteKendaraan(kendaraan.id);
+                    },
+                  );
+                },
                 icon: Icon(FeatherIcons.trash2, color: Themes.dangerColor),
               ),
             ],
