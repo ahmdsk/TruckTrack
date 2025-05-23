@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:truck_track/app/data/api_client.dart';
 import 'package:truck_track/app/models/kendaraan.dart';
 
@@ -12,5 +13,12 @@ class KendaraanService {
             .toList();
 
     return kendaraanList;
+  }
+
+  Future<void> addKendaraan(Map<String, dynamic> data) async {
+    debugPrint('Data yang dikirim: $data');
+    final response = await ApiClient.post('/kendaraan', data: data);
+    debugPrint('Response: ${response!.data}');
+    return response.data;
   }
 }

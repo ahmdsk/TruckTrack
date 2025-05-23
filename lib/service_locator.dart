@@ -15,7 +15,7 @@ Future<void> setupLocator() async {
   sl.registerSingleton<Dio>(ApiClient.dio);
 
   // Register AuthService (custom service wrapper)
-  sl.registerSingleton<AuthService>(AuthService(sl(), sl())); // dio & prefs
+  sl.registerSingleton<AuthService>(AuthService(sl())); // dio & prefs
   sl.registerSingleton<KendaraanService>(KendaraanService());
   sl.registerSingleton<UserService>(UserService());
 }

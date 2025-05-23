@@ -3,6 +3,9 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
 import 'package:truck_track/app/models/kendaraan.dart';
+import 'package:truck_track/app/models/user.dart';
+import 'package:truck_track/components/dropdown.dart';
+import 'package:truck_track/components/input.dart';
 import 'package:truck_track/components/not_found_data.dart';
 import 'package:truck_track/core/themes/themes.dart';
 
@@ -24,7 +27,28 @@ class MasterDataKendaraanView extends GetView<MasterDataKendaraanController> {
         actions: [
           IconButton(
             onPressed: () {
-              debugPrint('Add Kendaraan');
+              Get.bottomSheet(
+                isScrollControlled: true,
+                Container(
+                  height: Get.height * 0.8,
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Themes.whiteColor,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Themes.darkColor.withAlpha(20),
+                        blurRadius: 6,
+                        spreadRadius: 1,
+                        offset: const Offset(0, -2),
+                      ),
+                    ],
+                  ),
+                  child: SingleChildScrollView(child: FormKelolaKendaraan()),
+                ),
+              );
             },
             icon: Icon(FeatherIcons.plus, color: Themes.primaryColor),
           ),
@@ -47,6 +71,94 @@ class MasterDataKendaraanView extends GetView<MasterDataKendaraanController> {
                   ),
         ),
       ),
+    );
+  }
+}
+
+class FormKelolaKendaraan extends StatelessWidget {
+  const FormKelolaKendaraan({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<MasterDataKendaraanController>();
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          'Tambah Kendaraan',
+          style: Themes.titleStyle.copyWith(
+            color: Themes.primaryColor,
+            fontSize: 18,
+          ),
+        ),
+        const SizedBox(height: 20),
+
+        Obx(() {
+          final drivers = controller.listDrivers;
+          return Dropdown<User>(
+            title: "Pilih Driver",
+            hintText: "Pilih salah satu driver",
+            value: controller.selectedDriver.value,
+            onChanged: (val) => controller.selectedDriver.value = val,
+            items:
+                drivers
+                    .map(
+                      (driver) => DropdownMenuItem(
+                        value: driver,
+                        child: Text(driver.name ?? '-'),
+                      ),
+                    )
+                    .toList(),
+          );
+        }),
+
+        const SizedBox(height: 20),
+        InputField(
+          title: 'No Polisi',
+          hintText: 'Contoh: B 1234 ABC',
+          controller: controller.noPolisiController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'Jenis Kendaraan',
+          hintText: 'Contoh: Truck, Mobil Box',
+          controller: controller.jenisKendaraanController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'Kapasitas Tangki',
+          hintText: 'Contoh: 1000',
+          controller: controller.kapasitasTangkiController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'No. Segel',
+          hintText: 'Contoh: 1234567890',
+          controller: controller.noSegelController,
+        ),
+        const SizedBox(height: 20),
+        SizedBox(
+          width: Get.width,
+          child: ElevatedButton(
+            onPressed: () => controller.addKendaraan(),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Themes.primaryColor,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            child: Text(
+              'Simpan',
+              style: Themes.bodyStyle.copyWith(
+                color: Themes.whiteColor,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

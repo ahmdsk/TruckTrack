@@ -4,18 +4,18 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:truck_track/app/data/api_client.dart';
 import 'package:truck_track/app/models/user.dart';
 import 'package:truck_track/app/routes/app_pages.dart';
 import 'package:truck_track/components/snackbar.dart';
 
 class AuthService {
-  final Dio dio;
   final SharedPreferences prefs;
 
   User? _currentUser;
   User? get currentUser => _currentUser;
 
-  AuthService(this.dio, this.prefs) {
+  AuthService(this.prefs) {
     _setupInterceptor();
 
     final userStr = prefs.getString('user');
@@ -25,8 +25,8 @@ class AuthService {
   }
 
   void _setupInterceptor() {
-    dio.interceptors.clear(); // optional
-    dio.interceptors.add(
+    // ApiClient.dio.interceptors.clear(); // optional
+    ApiClient.dio.interceptors.add(
       InterceptorsWrapper(
         onError: (e, handler) async {
           if (e.response?.statusCode == 401 || currentUser == null) {
@@ -45,7 +45,7 @@ class AuthService {
 
     final token = prefs.getString('access_token');
     if (token != null) {
-      dio.options.headers['Authorization'] = 'Bearer $token';
+      ApiClient.dio.options.headers['Authorization'] = 'Bearer $token';
     }
   }
 
@@ -54,12 +54,12 @@ class AuthService {
     if (refresh == null) return false;
 
     try {
-      final res = await dio.post('/refresh');
-      final newAccess = res.data['token'];
+      final res = await ApiClient.post('/refresh');
+      final newAccess = res!.data['token'];
 
       await prefs.setString('access_token', newAccess);
 
-      dio.options.headers['Authorization'] = 'Bearer $newAccess';
+      ApiClient.dio.options.headers['Authorization'] = 'Bearer $newAccess';
       return true;
     } catch (_) {
       return false;
@@ -68,12 +68,12 @@ class AuthService {
 
   Future<bool> login(String email, String pass) async {
     try {
-      final res = await dio.post(
+      final res = await ApiClient.post(
         '/login',
         data: {'email': email, 'password': pass},
       );
 
-      final token = res.data['token'];
+      final token = res!.data['token'];
       final userJson = res.data['user'];
 
       await prefs.setString('access_token', token);
@@ -81,7 +81,7 @@ class AuthService {
 
       _currentUser = User.fromJson(userJson);
 
-      dio.options.headers['Authorization'] = 'Bearer $token';
+      ApiClient.dio.options.headers['Authorization'] = 'Bearer $token';
       return true;
     } catch (e) {
       return false;

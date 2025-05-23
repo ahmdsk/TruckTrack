@@ -9,11 +9,11 @@ enum UserRole {
 
 class UserService {
   Future<List<User>> getAllByRoles(UserRole role) async {
-    final response = await ApiClient.dio.get('/users/${role.name}');
+    final response = await ApiClient.get('/users/${role.name}');
 
     // Parse the response data into a list of User objects
     final List<User> userList =
-        (response.data['data'] as List)
+        (response!.data['data'] as List)
             .map((item) => User.fromJson(item))
             .toList();
 
