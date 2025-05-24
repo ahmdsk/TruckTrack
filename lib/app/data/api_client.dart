@@ -6,7 +6,7 @@ import 'package:truck_track/components/snackbar.dart';
 class ApiClient {
   static final Dio dio = Dio(
     BaseOptions(
-      baseUrl: 'http://127.0.0.1:8000/api', // Ganti dengan base URL kamu
+      baseUrl: 'https://api-truck.ladangku.my.id/api', // Ganti dengan base URL kamu
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       headers: {
