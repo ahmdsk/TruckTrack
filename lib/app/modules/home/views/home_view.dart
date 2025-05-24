@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
+import 'package:truck_track/app/models/user.dart';
 import 'package:truck_track/components/snackbar.dart';
 import 'package:truck_track/core/themes/themes.dart';
 import 'package:truck_track/service_locator.dart';
@@ -123,7 +124,7 @@ class HomeView extends GetView<HomeController> {
                   childAspectRatio: 1.4,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
-                  children: buildMenuByRole(user?.role ?? 'manajer'),
+                  children: buildMenuByRole(user!),
                 ),
               ),
             ),
@@ -134,8 +135,8 @@ class HomeView extends GetView<HomeController> {
   }
 }
 
-List<Widget> buildMenuByRole(String role) {
-  if (role == 'manajer') {
+List<Widget> buildMenuByRole(User user) {
+  if (user.role == 'manajer') {
     return [
       CardMenuHome(
         title: 'Data Kendaraan',
@@ -158,12 +159,12 @@ List<Widget> buildMenuByRole(String role) {
         onTap: () => Get.toNamed('/jadwal-pengiriman'),
       ),
     ];
-  } else if (role == 'costumer') {
+  } else if (user.role == 'costumer') {
     return [
       CardMenuHome(
         title: 'Cek Pesanan',
         icon: FeatherIcons.truck,
-        onTap: () => Get.toNamed('/cek-pesanan')
+        onTap: () => Get.toNamed('/cek-pesanan?costumerId=${user.id}'),
       ),
       CardMenuHome(
         title: 'Profile Saya',
@@ -171,7 +172,7 @@ List<Widget> buildMenuByRole(String role) {
         onTap: () => Get.toNamed('/profile')
       ),
     ];
-  } else if (role == 'driver') {
+  } else if (user.role == 'driver') {
     return [
       CardMenuHome(
         title: 'Jadwal Saya',

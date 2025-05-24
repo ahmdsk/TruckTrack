@@ -15,6 +15,7 @@ abstract class Routes {
   static const SETTING_ORDER = _Paths.SETTING_ORDER;
   static const JADWAL_PENGIRIMAN = _Paths.JADWAL_PENGIRIMAN;
   static const JADWAL_DRIVER = _Paths.JADWAL_DRIVER;
+  static const CEK_PESANAN = _Paths.CEK_PESANAN;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const SETTING_ORDER = '/setting-order';
   static const JADWAL_PENGIRIMAN = '/jadwal-pengiriman';
   static const JADWAL_DRIVER = '/jadwal-driver';
+  static const CEK_PESANAN = '/cek-pesanan';
 }

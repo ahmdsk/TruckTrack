@@ -1,4 +1,5 @@
 import 'package:truck_track/app/data/api_client.dart';
+import 'package:truck_track/app/models/cek_pesanan_costumer.dart';
 import 'package:truck_track/app/models/pesanan.dart';
 
 class OrderService {
@@ -28,4 +29,16 @@ class OrderService {
     final response = await ApiClient.delete('/pesanan/$id');
     return response!.data;
   }  
+
+  Future<List<CekPesananCostumer>> getCekPesananCostumer(String costumerId) async {
+    final response = await ApiClient.get('/pesanan/costumer/$costumerId');
+
+    // Parse the response data into a list of CekPesananCostumer objects
+    final List<CekPesananCostumer> cekPesananList =
+        (response!.data['data'] as List)
+            .map((item) => CekPesananCostumer.fromJson(item))
+            .toList();
+
+    return cekPesananList;
+  }
 }

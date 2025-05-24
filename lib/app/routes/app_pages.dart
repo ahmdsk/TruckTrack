@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/cek_pesanan/bindings/cek_pesanan_binding.dart';
+import '../modules/cek_pesanan/views/cek_pesanan_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/jadwal_driver/bindings/jadwal_driver_binding.dart';
@@ -91,6 +93,11 @@ class AppPages {
       name: _Paths.JADWAL_DRIVER,
       page: () => const JadwalDriverView(),
       binding: JadwalDriverBinding(),
+    ),
+    GetPage(
+      name: _Paths.CEK_PESANAN,
+      page: () => const CekPesananView(),
+      binding: CekPesananBinding(),
     ),
   ];
 }
