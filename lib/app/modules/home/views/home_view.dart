@@ -138,6 +138,7 @@ class HomeView extends GetView<HomeController> {
                     CardMenuHome(
                       title: 'Jadwal Pengiriman',
                       icon: FeatherIcons.calendar,
+                      onTap: () => Get.toNamed('/jadwal-pengiriman'),
                     ),
                   ],
                 ),

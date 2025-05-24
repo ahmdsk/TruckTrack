@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
-import 'package:truck_track/app/modules/setting_delivery/views/form_setting_delivery_view.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/jadwal_pengiriman/bindings/jadwal_pengiriman_binding.dart';
+import '../modules/jadwal_pengiriman/views/jadwal_pengiriman_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/maps/bindings/maps_binding.dart';
@@ -14,6 +15,7 @@ import '../modules/master_data/pengguna/views/master_data_pengguna_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/setting_delivery/bindings/setting_delivery_binding.dart';
+import '../modules/setting_delivery/views/form_setting_delivery_view.dart';
 import '../modules/setting_delivery/views/setting_delivery_view.dart';
 import '../modules/setting_order/bindings/setting_order_binding.dart';
 import '../modules/setting_order/views/setting_order_view.dart';
@@ -77,6 +79,11 @@ class AppPages {
       name: _Paths.SETTING_ORDER,
       page: () => const SettingOrderView(),
       binding: SettingOrderBinding(),
+    ),
+    GetPage(
+      name: _Paths.JADWAL_PENGIRIMAN,
+      page: () => const JadwalPengirimanView(),
+      binding: JadwalPengirimanBinding(),
     ),
   ];
 }
