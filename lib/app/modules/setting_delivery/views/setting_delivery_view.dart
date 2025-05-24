@@ -21,6 +21,14 @@ class SettingDeliveryView extends GetView<SettingDeliveryController> {
             fontSize: 18,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Get.toNamed('/setting-delivery/form');
+            },
+          ),
+        ],
       ),
       body: Obx(
         () =>

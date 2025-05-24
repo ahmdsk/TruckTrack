@@ -11,6 +11,7 @@ class InputField extends StatelessWidget {
     this.controller,
     this.isPassword,
     this.keyboardType = TextInputType.text,
+    this.onChanged,
   });
 
   final String title;
@@ -20,6 +21,7 @@ class InputField extends StatelessWidget {
   final TextEditingController? controller;
   final bool? isPassword;
   final TextInputType keyboardType;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {

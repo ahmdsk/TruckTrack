@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:truck_track/app/modules/setting_delivery/views/form_setting_delivery_view.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
@@ -66,6 +67,11 @@ class AppPages {
       name: _Paths.SETTING_DELIVERY,
       page: () => const SettingDeliveryView(),
       binding: SettingDeliveryBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORM_SETTING_DELIVERY,
+      page: () => const FormSettingDeliveryView(),
+      binding: SettingOrderBinding(),
     ),
     GetPage(
       name: _Paths.SETTING_ORDER,
