@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:truck_track/app/models/pesanan.dart';
 import 'package:truck_track/app/models/user.dart';
+import 'package:truck_track/components/action_button_card.dart';
 import 'package:truck_track/components/confirmation_dialog.dart';
 import 'package:truck_track/components/dropdown.dart';
 import 'package:truck_track/components/input.dart';
@@ -190,7 +191,7 @@ class PengirimanCard extends StatelessWidget {
               spacing: 8,
               children: [
                 Expanded(
-                  child: _ActionButton(
+                  child: ActionButtonCard(
                     label: 'Edit',
                     icon: Icons.edit,
                     color: Colors.blueAccent,
@@ -216,7 +217,7 @@ class PengirimanCard extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: _ActionButton(
+                  child: ActionButtonCard(
                     label: 'Hapus',
                     icon: Icons.delete,
                     color: Themes.dangerColor,
@@ -227,8 +228,7 @@ class PengirimanCard extends StatelessWidget {
                             'Apakah anda yakin ingin menghapus pesanan ini?',
                         onConfirm: () {
                           // Lanjutkan proses penghapusan di sini
-                          final controller =
-                              Get.find<SettingOrderController>();
+                          final controller = Get.find<SettingOrderController>();
                           controller.deletePesanan(pesanan.id);
                         },
                       );
@@ -236,7 +236,7 @@ class PengirimanCard extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: _ActionButton(
+                  child: ActionButtonCard(
                     label: 'Atur',
                     icon: Icons.settings,
                     color: Themes.successColor,
@@ -380,35 +380,6 @@ class FormKelolaDelivery extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _ActionButton extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-
-  const _ActionButton({
-    required this.label,
-    required this.icon,
-    required this.color,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton.icon(
-      style: TextButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        backgroundColor: color.withAlpha(50),
-        foregroundColor: color,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      onPressed: onTap,
-      icon: Icon(icon, size: 18),
-      label: Text(label),
     );
   }
 }

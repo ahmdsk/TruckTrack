@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:truck_track/app/models/tujuan_kirim.dart';
+import 'package:truck_track/components/action_button_card.dart';
 import 'package:truck_track/components/not_found_data.dart';
 import 'package:truck_track/core/themes/themes.dart';
 
@@ -143,7 +144,9 @@ class CardTujuanPengiriman extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                tujuanKirim.sudahDilewati == 1 ? 'Sudah dilewati' : 'Belum dilewati',
+                tujuanKirim.sudahDilewati == 1
+                    ? 'Sudah dilewati'
+                    : 'Belum dilewati',
                 style: Themes.bodyStyle.copyWith(
                   fontWeight: FontWeight.w500,
                   color:
@@ -151,6 +154,36 @@ class CardTujuanPengiriman extends StatelessWidget {
                           ? Themes.successColor
                           : Themes.darkColor.withAlpha(140),
                   fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 20),
+
+          // Action Buttons
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            spacing: 8,
+            children: [
+              Expanded(
+                child: ActionButtonCard(
+                  label: 'Edit',
+                  icon: Icons.edit,
+                  color: Colors.blueAccent,
+                  onTap: () {
+                    debugPrint('Edit ${tujuanKirim.pesanan?.noPesanan}');
+                  },
+                ),
+              ),
+              Expanded(
+                child: ActionButtonCard(
+                  label: 'Hapus',
+                  icon: Icons.delete,
+                  color: Themes.dangerColor,
+                  onTap: () {
+                    debugPrint('Hapus ${tujuanKirim.pesanan?.noPesanan}');
+                  },
                 ),
               ),
             ],
