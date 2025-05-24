@@ -13,4 +13,19 @@ class DeliveryService {
 
     return userList;
   }
+
+  Future<void> addPesanan(Map<String, dynamic> data) async {
+    final response = await ApiClient.post('/pesanan', data: data);
+    return response!.data;
+  }
+
+  Future<void> updatePesanan(String id, Map<String, dynamic> data) async {
+    final response = await ApiClient.put('/pesanan/$id', data: data);
+    return response!.data;
+  }
+
+  Future<void> deletePesanan(String id) async {
+    final response = await ApiClient.delete('/pesanan/$id');
+    return response!.data;
+  }  
 }

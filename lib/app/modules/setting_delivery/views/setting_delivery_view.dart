@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:truck_track/app/models/pesanan.dart';
+import 'package:truck_track/app/models/user.dart';
+import 'package:truck_track/components/confirmation_dialog.dart';
+import 'package:truck_track/components/dropdown.dart';
+import 'package:truck_track/components/input.dart';
 import 'package:truck_track/components/not_found_data.dart';
 import 'package:truck_track/core/themes/themes.dart';
 
@@ -21,6 +26,27 @@ class SettingDeliveryView extends GetView<SettingDeliveryController> {
             fontSize: 18,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.bottomSheet(
+                isScrollControlled: true,
+                Container(
+                  height: Get.height * 0.85,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Themes.whiteColor,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
+                  ),
+                  child: SingleChildScrollView(child: FormKelolaDelivery()),
+                ),
+              );
+            },
+            icon: Icon(FeatherIcons.plus, color: Themes.primaryColor),
+          ),
+        ],
       ),
       body: Obx(
         () =>
@@ -29,7 +55,9 @@ class SettingDeliveryView extends GetView<SettingDeliveryController> {
                 : ListView.builder(
                   itemCount: controller.listDeliverys.length,
                   itemBuilder: (context, index) {
-                    return PengirimanCard(pesanan: controller.listDeliverys[index]);
+                    return PengirimanCard(
+                      pesanan: controller.listDeliverys[index],
+                    );
                   },
                 ),
       ),
@@ -77,7 +105,9 @@ class PengirimanCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  formatter.format(DateTime.parse(pesanan.tanggalPesanan.toString())),
+                  formatter.format(
+                    DateTime.parse(pesanan.tanggalPesanan.toString()),
+                  ),
                   style: TextStyle(
                     fontSize: 13,
                     color: Themes.darkColor.withAlpha(150),
@@ -144,7 +174,9 @@ class PengirimanCard extends StatelessWidget {
                 ),
                 SizedBox(width: 8),
                 Expanded(
-                  child: Text('Driver: ${pesanan.driver?.name ?? '-'} | Customer: ${pesanan.costumer?.name ?? '-'}'),
+                  child: Text(
+                    'Driver: ${pesanan.driver?.name ?? '-'} | Customer: ${pesanan.costumer?.name ?? '-'}',
+                  ),
                 ),
               ],
             ),
@@ -163,6 +195,22 @@ class PengirimanCard extends StatelessWidget {
                     color: Colors.blueAccent,
                     onTap: () {
                       debugPrint('Edit ${pesanan.noPesanan}');
+                      Get.bottomSheet(
+                        isScrollControlled: true,
+                        Container(
+                          height: Get.height * 0.85,
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Themes.whiteColor,
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
+                          child: SingleChildScrollView(
+                            child: FormKelolaDelivery(pesanan: pesanan),
+                          ),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -172,7 +220,17 @@ class PengirimanCard extends StatelessWidget {
                     icon: Icons.delete,
                     color: Themes.dangerColor,
                     onTap: () {
-                      debugPrint('Hapus ${pesanan.noPesanan}');
+                      ConfirmationDialog.show(
+                        title: 'Hapus Pesanan',
+                        description:
+                            'Apakah anda yakin ingin menghapus pesanan ini?',
+                        onConfirm: () {
+                          // Lanjutkan proses penghapusan di sini
+                          final controller =
+                              Get.find<SettingDeliveryController>();
+                          controller.deletePesanan(pesanan.id);
+                        },
+                      );
                     },
                   ),
                 ),
@@ -195,6 +253,136 @@ class PengirimanCard extends StatelessWidget {
   }
 }
 
+class FormKelolaDelivery extends StatelessWidget {
+  const FormKelolaDelivery({super.key, this.pesanan});
+
+  final Pesanan? pesanan;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<SettingDeliveryController>();
+
+    // isi form jika dalam mode edit
+    if (pesanan != null) {
+      controller.selectedDriver.value = controller.listDrivers.firstWhereOrNull(
+        (e) => e.id == pesanan!.driverId,
+      );
+      controller.selectedCostumer.value = controller.listCostumers
+          .firstWhereOrNull((e) => e.id == pesanan!.costumerId);
+      controller.noPesananController.text = pesanan!.noPesanan;
+      controller.jenisBBMController.text = pesanan!.jenisBbm;
+      controller.volumeBBMController.text = pesanan!.volumeBbm.toString();
+      controller.alamatPengirimanController.text =
+          pesanan!.alamatPengiriman ?? '';
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          pesanan != null ? 'Edit Pesanan' : 'Tambah Pesanan',
+          style: Themes.titleStyle.copyWith(
+            color: Themes.primaryColor,
+            fontSize: 18,
+          ),
+        ),
+        const SizedBox(height: 20),
+
+        Obx(() {
+          final drivers = controller.listDrivers;
+          return Dropdown<User>(
+            title: "Pilih Driver",
+            hintText: "Pilih salah satu driver",
+            value: controller.selectedDriver.value,
+            onChanged: (val) => controller.selectedDriver.value = val,
+            items:
+                drivers
+                    .map(
+                      (driver) => DropdownMenuItem(
+                        value: driver,
+                        child: Text(driver.name ?? '-'),
+                      ),
+                    )
+                    .toList(),
+          );
+        }),
+
+        const SizedBox(height: 20),
+
+        Obx(() {
+          final costumer = controller.listCostumers;
+          return Dropdown<User>(
+            title: "Pilih Costumer",
+            hintText: "Pilih salah satu costumer",
+            value: controller.selectedCostumer.value,
+            onChanged: (val) => controller.selectedCostumer.value = val,
+            items:
+                costumer
+                    .map(
+                      (driver) => DropdownMenuItem(
+                        value: driver,
+                        child: Text(driver.name ?? '-'),
+                      ),
+                    )
+                    .toList(),
+          );
+        }),
+
+        const SizedBox(height: 20),
+        InputField(
+          title: 'No Pesanan',
+          hintText: 'Contoh: P1234567890',
+          controller: controller.noPesananController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'Jenis BBM',
+          hintText: 'Contoh: Solar, Pertalite',
+          controller: controller.jenisBBMController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'Volume BBM',
+          hintText: 'Contoh: 1000',
+          controller: controller.volumeBBMController,
+          keyboardType: TextInputType.number,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'Alamat Pengiriman',
+          hintText: 'Contoh: Jl. Raya No. 123, Jakarta',
+          controller: controller.alamatPengirimanController,
+        ),
+        const SizedBox(height: 20),
+        SizedBox(
+          width: Get.width,
+          child: ElevatedButton(
+            onPressed: () {
+              pesanan != null
+                  ? controller.updatePesanan(pesanan!.id)
+                  : controller.addPesanan();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Themes.primaryColor,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            child: Text(
+              pesanan != null ? 'Update' : 'Simpan',
+              style: Themes.bodyStyle.copyWith(
+                color: Themes.whiteColor,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _ActionButton extends StatelessWidget {
   final String label;
   final IconData icon;
@@ -213,7 +401,7 @@ class _ActionButton extends StatelessWidget {
     return TextButton.icon(
       style: TextButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        backgroundColor: color.withOpacity(0.1),
+        backgroundColor: color.withAlpha(50),
         foregroundColor: color,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),

@@ -9,7 +9,8 @@ class InputField extends StatelessWidget {
     this.initialValue,
     this.largeText = false,
     this.controller,
-    this.isPassword
+    this.isPassword,
+    this.keyboardType = TextInputType.text,
   });
 
   final String title;
@@ -18,6 +19,7 @@ class InputField extends StatelessWidget {
   final bool largeText;
   final TextEditingController? controller;
   final bool? isPassword;
+  final TextInputType keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class InputField extends StatelessWidget {
         ),
         SizedBox(height: 10),
         TextFormField(
+          keyboardType: keyboardType,
           controller: controller,
           initialValue: initialValue,
           obscureText: isPassword ?? false,
