@@ -1,8 +1,12 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:truck_track/app/data/api_client.dart';
 import 'package:truck_track/app/models/user.dart';
+import 'package:truck_track/app/routes/app_pages.dart';
 
 class AuthService {
   final SharedPreferences prefs;
@@ -11,9 +15,34 @@ class AuthService {
   User? get currentUser => _currentUser;
 
   AuthService(this.prefs) {
+    _setupInterceptor();
+
     final userStr = prefs.getString('user');
     if (userStr != null) {
       _currentUser = User.fromJson(jsonDecode(userStr));
+    }
+  }
+
+  void _setupInterceptor() {
+    // ApiClient.dio.interceptors.clear(); // optional
+    ApiClient.dio.interceptors.add(
+      InterceptorsWrapper(
+        onError: (e, handler) async {
+          if (e.response?.statusCode == 401 || currentUser == null) {
+            debugPrint('Token Kamu Expired, Silahkan Login Kembali');
+
+            await logout();
+
+            Get.offAllNamed(Routes.LOGIN);
+          }
+          return handler.next(e);
+        },
+      ),
+    );
+
+    final token = prefs.getString('access_token');
+    if (token != null) {
+      ApiClient.dio.options.headers['Authorization'] = 'Bearer $token';
     }
   }
 
