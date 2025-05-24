@@ -103,7 +103,11 @@ class CardPesananCostumer extends StatelessWidget {
           // Nama Manajer
           Row(
             children: [
-              Icon(Icons.supervisor_account, size: 18, color: Themes.primaryColor),
+              Icon(
+                Icons.supervisor_account,
+                size: 18,
+                color: Themes.primaryColor,
+              ),
               const SizedBox(width: 8),
               Text(
                 pesananCostumer.manager?.name ?? '-',
@@ -281,8 +285,9 @@ class CardPesananCostumer extends StatelessWidget {
                                       width: double.infinity,
                                       child: ElevatedButton.icon(
                                         onPressed: () {
-                                          debugPrint(
-                                            'Lihat di Maps: ${tujuan.alamatTujuan}',
+                                          Get.toNamed(
+                                            '/maps-tracking',
+                                            arguments: tujuan,
                                           );
                                         },
                                         icon: Icon(

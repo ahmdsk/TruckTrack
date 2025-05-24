@@ -16,6 +16,7 @@ abstract class Routes {
   static const JADWAL_PENGIRIMAN = _Paths.JADWAL_PENGIRIMAN;
   static const JADWAL_DRIVER = _Paths.JADWAL_DRIVER;
   static const CEK_PESANAN = _Paths.CEK_PESANAN;
+  static const MAPS_TRACKING = _Paths.MAPS_TRACKING;
 }
 
 abstract class _Paths {
@@ -33,4 +34,5 @@ abstract class _Paths {
   static const JADWAL_PENGIRIMAN = '/jadwal-pengiriman';
   static const JADWAL_DRIVER = '/jadwal-driver';
   static const CEK_PESANAN = '/cek-pesanan';
+  static const MAPS_TRACKING = '/maps-tracking';
 }

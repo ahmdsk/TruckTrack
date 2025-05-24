@@ -12,6 +12,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/maps/bindings/maps_binding.dart';
 import '../modules/maps/views/maps_view.dart';
+import '../modules/maps_tracking/bindings/maps_tracking_binding.dart';
+import '../modules/maps_tracking/views/maps_tracking_view.dart';
 import '../modules/master_data/kendaraan/bindings/master_data_kendaraan_binding.dart';
 import '../modules/master_data/kendaraan/views/master_data_kendaraan_view.dart';
 import '../modules/master_data/pengguna/bindings/master_data_pengguna_binding.dart';
@@ -98,6 +100,11 @@ class AppPages {
       name: _Paths.CEK_PESANAN,
       page: () => const CekPesananView(),
       binding: CekPesananBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAPS_TRACKING,
+      page: () => const MapsTrackingView(),
+      binding: MapsTrackingBinding(),
     ),
   ];
 }
