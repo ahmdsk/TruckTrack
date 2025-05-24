@@ -2,8 +2,8 @@ import 'package:truck_track/app/data/api_client.dart';
 import 'package:truck_track/app/models/pesanan.dart';
 
 class DeliveryService {
-  Future<List<Pesanan>> getPesanan() async {
-    final response = await ApiClient.get('/pesanan');
+  Future<List<Pesanan>> getDelivery() async {
+    final response = await ApiClient.get('/tujuan-kirim');
 
     // Parse the response data into a list of User objects
     final List<Pesanan> userList =
@@ -14,18 +14,18 @@ class DeliveryService {
     return userList;
   }
 
-  Future<void> addPesanan(Map<String, dynamic> data) async {
-    final response = await ApiClient.post('/pesanan', data: data);
+  Future<void> addDelivery(Map<String, dynamic> data) async {
+    final response = await ApiClient.post('/tujuan-kirim', data: data);
     return response!.data;
   }
 
-  Future<void> updatePesanan(String id, Map<String, dynamic> data) async {
-    final response = await ApiClient.put('/pesanan/$id', data: data);
+  Future<void> updateDelivery(String id, Map<String, dynamic> data) async {
+    final response = await ApiClient.put('/tujuan-kirim/$id', data: data);
     return response!.data;
   }
 
-  Future<void> deletePesanan(String id) async {
-    final response = await ApiClient.delete('/pesanan/$id');
+  Future<void> deleteDelivery(String id) async {
+    final response = await ApiClient.delete('/tujuan-kirim/$id');
     return response!.data;
   }  
 }

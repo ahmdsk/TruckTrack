@@ -14,6 +14,8 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/setting_delivery/bindings/setting_delivery_binding.dart';
 import '../modules/setting_delivery/views/setting_delivery_view.dart';
+import '../modules/setting_order/bindings/setting_order_binding.dart';
+import '../modules/setting_order/views/setting_order_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.SETTING_DELIVERY,
       page: () => const SettingDeliveryView(),
       binding: SettingDeliveryBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTING_ORDER,
+      page: () => const SettingOrderView(),
+      binding: SettingOrderBinding(),
     ),
   ];
 }

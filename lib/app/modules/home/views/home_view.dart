@@ -131,9 +131,9 @@ class HomeView extends GetView<HomeController> {
                       onTap: () => Get.toNamed('/pengguna'),
                     ),
                     CardMenuHome(
-                      title: 'Atur Pengiriman',
+                      title: 'Atur Pesanan',
                       icon: FeatherIcons.box,
-                      onTap: () => Get.toNamed('/setting-delivery'),
+                      onTap: () => Get.toNamed('/setting-order'),
                     ),
                     CardMenuHome(
                       title: 'Jadwal Pengiriman',

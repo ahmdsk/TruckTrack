@@ -11,6 +11,7 @@ abstract class Routes {
   static const MASTER_DATA_PENGGUNA = _Paths.MASTER_DATA_PENGGUNA;
   static const SPLASH = _Paths.SPLASH;
   static const SETTING_DELIVERY = _Paths.SETTING_DELIVERY;
+  static const SETTING_ORDER = _Paths.SETTING_ORDER;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const MASTER_DATA_PENGGUNA = '/pengguna';
   static const SPLASH = '/splash';
   static const SETTING_DELIVERY = '/setting-delivery';
+  static const SETTING_ORDER = '/setting-order';
 }
