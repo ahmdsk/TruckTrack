@@ -166,9 +166,9 @@ List<Widget> buildMenuByRole(String role) {
         onTap: () => Get.toNamed('/cek-pesanan')
       ),
       CardMenuHome(
-        title: 'Riwayat Pesanan',
-        icon: FeatherIcons.clock,
-        onTap: () => Get.toNamed('/riwayat-pesanan'),
+        title: 'Profile Saya',
+        icon: FeatherIcons.user,
+        onTap: () => Get.toNamed('/profile')
       ),
     ];
   } else if (role == 'driver') {
@@ -179,9 +179,9 @@ List<Widget> buildMenuByRole(String role) {
         onTap: () => Get.toNamed('/jadwal-driver'),
       ),
       CardMenuHome(
-        title: 'Status Pengiriman',
-        icon: FeatherIcons.truck,
-        onTap: () => Get.toNamed('/status-pengiriman'),
+        title: 'Profile Saya',
+        icon: FeatherIcons.user,
+        onTap: () => Get.toNamed('/profile')
       ),
     ];
   } else {

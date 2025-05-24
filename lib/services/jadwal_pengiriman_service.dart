@@ -31,4 +31,17 @@ class JadwalPengirimanService {
     final response = await ApiClient.post('/pengiriman/mulai/$idPesanan');
     return response?.data;
   }
+
+  Future<void> addDeliveryNote(String idPengiriman, String note) async {
+    final response = await ApiClient.post(
+      '/pengiriman/catatan/$idPengiriman',
+      data: {'catatan': note},
+    );
+    return response?.data;
+  }
+
+  Future<void> completeDelivery(String idPengiriman) async {
+    final response = await ApiClient.post('/pengiriman/tandai-selesai/$idPengiriman');
+    return response?.data;
+  }
 }
