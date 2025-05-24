@@ -72,16 +72,28 @@ class SearchFieldWithDropdown extends StatelessWidget {
             ),
             if (suggestions.isNotEmpty)
               SizedBox(
-                height: 200,
+                height: 360,
                 child: Stack(
                   children: [
                     Positioned(
-                      top: 60,
+                      top: 70,
                       left: 0,
                       right: 0,
-                      child: Material(
-                        elevation: 4,
-                        borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Themes.whiteColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Themes.darkColor.withAlpha(20),
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        padding: const EdgeInsets.all(8),
                         child: ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,

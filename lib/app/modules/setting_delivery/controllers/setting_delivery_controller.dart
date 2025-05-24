@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:truck_track/app/models/tujuan_kirim.dart';
+import 'package:truck_track/components/snackbar.dart';
 import 'package:truck_track/service_locator.dart';
 import 'package:truck_track/services/delivery_service.dart';
 
 class SettingDeliveryController extends GetxController {
+  final orderId = Get.parameters['orderId'] ?? '';
+
   // List tujuan kirim
   final listDelivery = <TujuanKirim>[].obs;
 
@@ -115,10 +118,10 @@ class SettingDeliveryController extends GetxController {
     waktu.value = (route['duration'] / 60).toStringAsFixed(0); // menit
   }
 
-  // 🚚 Simpan data pengiriman (simulasi)
+  // Simpan data pengirima
   Future<void> kirimData() async {
     final data = {
-      'pesanan_id': '1', // sesuaikan kalau dinamis
+      'pesanan_id': orderId,
       'latitude_asal': latAsal.value,
       'longitude_asal': longAsal.value,
       'latitude_tujuan': latTujuan.value,
@@ -131,16 +134,73 @@ class SettingDeliveryController extends GetxController {
     };
 
     debugPrint('Data yang akan dikirim: $data');
-    // await deliveryService.kirimData(data); // jika ada
+    await deliveryService.addDelivery(data);
+    showCustomSnackbar(title: 'Sukses', message: 'Data pengiriman berhasil disimpan!');
+
+    // Setelah simpan, refresh daftar pengiriman
+    final deliverys = await deliveryService.getDelivery(orderId: orderId);
+    listDelivery.assignAll(deliverys);
+
+    // Kosongkan input setelah simpan
+    clearForm();
+  }
+
+  // update data pengiriman
+  Future<void> updateData(int id) async {
+    final data = {
+      'pesanan_id': orderId,
+      'latitude_asal': latAsal.value,
+      'longitude_asal': longAsal.value,
+      'latitude_tujuan': latTujuan.value,
+      'longitude_tujuan': longTujuan.value,
+      'alamat_asal': alamatAsal.value,
+      'alamat_tujuan': alamatTujuan.value,
+      'jarak': jarak.value,
+      'waktu_tempuh': waktu.value,
+      'catatan': catatan.text,
+    };
+
+    debugPrint('Data yang akan diupdate: $data');
+    await deliveryService.updateDelivery(id.toString(), data);
+    showCustomSnackbar(title: 'Sukses', message: 'Data pengiriman berhasil diupdate!');
+
+    // Setelah update, refresh daftar pengiriman
+    final deliverys = await deliveryService.getDelivery(orderId: orderId);
+    listDelivery.assignAll(deliverys);
+  }
+
+  // Hapus data pengiriman
+  Future<void> deleteData(int id) async {
+    await deliveryService.deleteDelivery(id.toString());
+    showCustomSnackbar(title: 'Sukses', message: 'Data pengiriman berhasil dihapus!');
+
+    // Setelah hapus, refresh daftar pengiriman
+    final deliverys = await deliveryService.getDelivery(orderId: orderId);
+    listDelivery.assignAll(deliverys);
+  }
+
+  void clearForm() {
+    asalController.clear();
+    tujuanController.clear();
+    catatan.clear();
+    alamatAsal.value = '';
+    alamatTujuan.value = '';
+    latAsal.value = '';
+    longAsal.value = '';
+    latTujuan.value = '';
+    longTujuan.value = '';
+    jarak.value = '';
+    waktu.value = '';
+    hasilAsal.clear();
+    hasilTujuan.clear();
   }
 
   @override
   Future<void> onInit() async {
     super.onInit();
 
-    final id = Get.parameters['orderId'];
-    if (id != null) {
-      final deliverys = await deliveryService.getDelivery(orderId: id);
+    if (orderId.isNotEmpty) {
+      final deliverys = await deliveryService.getDelivery(orderId: orderId);
       listDelivery.assignAll(deliverys);
     }
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:truck_track/app/models/tujuan_kirim.dart';
 import 'package:truck_track/components/action_button_card.dart';
+import 'package:truck_track/components/confirmation_dialog.dart';
 import 'package:truck_track/components/not_found_data.dart';
 import 'package:truck_track/core/themes/themes.dart';
 
@@ -25,7 +26,9 @@ class SettingDeliveryView extends GetView<SettingDeliveryController> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              Get.toNamed('/setting-delivery/form');
+              Get.toNamed(
+                '/setting-delivery/form?orderId=${controller.orderId}',
+              );
             },
           ),
         ],
@@ -117,7 +120,7 @@ class CardTujuanPengiriman extends StatelessWidget {
               Icon(Icons.directions, size: 18, color: Colors.blue),
               SizedBox(width: 8),
               Text(
-                '${tujuanKirim.jarak} • ${tujuanKirim.waktuTempuh}',
+                '${tujuanKirim.jarak} km • ${tujuanKirim.waktuTempuh} menit',
                 style: Themes.bodyStyle.copyWith(fontSize: 14),
               ),
             ],
@@ -181,6 +184,11 @@ class CardTujuanPengiriman extends StatelessWidget {
                   color: Colors.blueAccent,
                   onTap: () {
                     debugPrint('Edit ${tujuanKirim.pesanan?.noPesanan}');
+
+                    Get.toNamed(
+                      '/setting-delivery/form?orderId=${tujuanKirim.pesanan?.id}&tujuanId=${tujuanKirim.id}',
+                      arguments: tujuanKirim,
+                    );
                   },
                 ),
               ),
@@ -190,7 +198,16 @@ class CardTujuanPengiriman extends StatelessWidget {
                   icon: Icons.delete,
                   color: Themes.dangerColor,
                   onTap: () {
-                    debugPrint('Hapus ${tujuanKirim.pesanan?.noPesanan}');
+                    ConfirmationDialog.show(
+                      title: 'Hapus Pesanan',
+                      description:
+                          'Apakah anda yakin ingin menghapus pesanan ini?',
+                      onConfirm: () {
+                        // Lanjutkan proses penghapusan di sini
+                        final controller = Get.find<SettingDeliveryController>();
+                        controller.deleteData(tujuanKirim.id);
+                      },
+                    );
                   },
                 ),
               ),
