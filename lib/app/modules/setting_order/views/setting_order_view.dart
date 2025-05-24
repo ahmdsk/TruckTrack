@@ -51,13 +51,13 @@ class SettingOrderView extends GetView<SettingOrderController> {
       ),
       body: Obx(
         () =>
-            controller.listDeliverys.isEmpty
+            controller.listOrders.isEmpty
                 ? const NotFoundData()
                 : ListView.builder(
-                  itemCount: controller.listDeliverys.length,
+                  itemCount: controller.listOrders.length,
                   itemBuilder: (context, index) {
                     return PengirimanCard(
-                      pesanan: controller.listDeliverys[index],
+                      pesanan: controller.listOrders[index],
                     );
                   },
                 ),
@@ -241,7 +241,7 @@ class PengirimanCard extends StatelessWidget {
                     icon: Icons.settings,
                     color: Themes.successColor,
                     onTap: () {
-                      debugPrint('Atur ${pesanan.noPesanan}');
+                      Get.toNamed('/setting-delivery?orderId=${pesanan.id}');
                     },
                   ),
                 ),

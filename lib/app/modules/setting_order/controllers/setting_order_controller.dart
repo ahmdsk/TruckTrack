@@ -12,7 +12,7 @@ class SettingOrderController extends GetxController {
   final listDrivers = <User>[].obs;
   final listCostumers = <User>[].obs;
 
-  final listDeliverys = <Pesanan>[].obs;
+  final listOrders = <Pesanan>[].obs;
 
   // Panggil Services
   final orderService = sl<OrderService>();
@@ -31,7 +31,7 @@ class SettingOrderController extends GetxController {
     super.onInit();
 
     final users = await orderService.getPesanan();
-    listDeliverys.assignAll(users);
+    listOrders.assignAll(users);
 
     // Ambil data driver dari user_service
     final drivers = await userService.getAllByRoles(UserRole.driver);
@@ -57,7 +57,7 @@ class SettingOrderController extends GetxController {
     Get.back(); // tutup modal/bottomsheet
     // refresh list
     final pesanan = await orderService.getPesanan();
-    listDeliverys.assignAll(pesanan);
+    listOrders.assignAll(pesanan);
 
     // Clear semua controller
     clearForm();
@@ -70,7 +70,7 @@ class SettingOrderController extends GetxController {
 
     // refresh list
     final pesanan = await orderService.getPesanan();
-    listDeliverys.assignAll(pesanan);
+    listOrders.assignAll(pesanan);
   }
 
   // Method untuk clear semua controller
@@ -98,7 +98,7 @@ class SettingOrderController extends GetxController {
     Get.back(); // tutup modal/bottomsheet
     // refresh list
     final pesanan = await orderService.getPesanan();
-    listDeliverys.assignAll(pesanan);
+    listOrders.assignAll(pesanan);
 
     // Clear semua controller
     clearForm();

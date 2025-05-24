@@ -1,14 +1,14 @@
 import 'package:truck_track/app/data/api_client.dart';
-import 'package:truck_track/app/models/pesanan.dart';
+import 'package:truck_track/app/models/tujuan_kirim.dart';
 
 class DeliveryService {
-  Future<List<Pesanan>> getDelivery() async {
-    final response = await ApiClient.get('/tujuan-kirim');
+  Future<List<TujuanKirim>> getDelivery({required String orderId}) async {
+    final response = await ApiClient.get('/tujuan-kirim/pesanan/$orderId');
 
     // Parse the response data into a list of User objects
-    final List<Pesanan> userList =
+    final List<TujuanKirim> userList =
         (response!.data['data'] as List)
-            .map((item) => Pesanan.fromJson(item))
+            .map((item) => TujuanKirim.fromJson(item))
             .toList();
 
     return userList;
