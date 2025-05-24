@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/jadwal_driver/bindings/jadwal_driver_binding.dart';
+import '../modules/jadwal_driver/views/jadwal_driver_view.dart';
 import '../modules/jadwal_pengiriman/bindings/jadwal_pengiriman_binding.dart';
 import '../modules/jadwal_pengiriman/views/jadwal_pengiriman_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -84,6 +86,11 @@ class AppPages {
       name: _Paths.JADWAL_PENGIRIMAN,
       page: () => const JadwalPengirimanView(),
       binding: JadwalPengirimanBinding(),
+    ),
+    GetPage(
+      name: _Paths.JADWAL_DRIVER,
+      page: () => const JadwalDriverView(),
+      binding: JadwalDriverBinding(),
     ),
   ];
 }

@@ -1,5 +1,6 @@
 import 'package:truck_track/app/data/api_client.dart';
 import 'package:truck_track/app/models/jadwal_pengiriman.dart';
+import 'package:truck_track/app/models/jadwal_pengiriman_driver.dart';
 
 class JadwalPengirimanService {
   Future<List<JadwalPengiriman>> getAllJadwalPengiriman() async {
@@ -12,5 +13,22 @@ class JadwalPengirimanService {
             .toList();
 
     return jadwalPengiriman;
+  }
+
+  Future<List<JadwalPengirimanDriver>> getJadwalPengirimanDriver() async {
+    final response = await ApiClient.get('/jadwal-pengiriman/driver');
+
+    // Parse the response data into a list of User objects
+    final List<JadwalPengirimanDriver> jadwalPengiriman =
+        (response!.data['data'] as List)
+            .map((item) => JadwalPengirimanDriver.fromJson(item))
+            .toList();
+
+    return jadwalPengiriman;
+  }
+
+  Future<void> startDelivery(String idPesanan) async {
+    final response = await ApiClient.post('/pengiriman/mulai/$idPesanan');
+    return response?.data;
   }
 }

@@ -33,7 +33,7 @@ void showCustomSnackbar({
     ),
     messageText: Text(
       message,
-      style: TextStyle(fontSize: 14, color: textColor.withOpacity(0.85)),
+      style: TextStyle(fontSize: 14, color: textColor.withAlpha(100)),
     ),
   );
 }

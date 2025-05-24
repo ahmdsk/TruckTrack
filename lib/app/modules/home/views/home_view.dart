@@ -51,7 +51,10 @@ class HomeView extends GetView<HomeController> {
                           user?.name ?? '-',
                           style: Themes.titleStyle.copyWith(fontSize: 20),
                         ),
-                        Text(user?.role?.toUpperCase() ?? '-', style: Themes.bodyStyle),
+                        Text(
+                          user?.role?.toUpperCase() ?? '-',
+                          style: Themes.bodyStyle,
+                        ),
                       ],
                     ),
                   ],
@@ -65,7 +68,10 @@ class HomeView extends GetView<HomeController> {
                     if (!authService.isLoggedIn) {
                       Get.offAllNamed('/login');
                     } else {
-                      showCustomSnackbar(title: 'Gagal', message: 'Gagal logout');
+                      showCustomSnackbar(
+                        title: 'Gagal',
+                        message: 'Gagal logout',
+                      );
                     }
                   },
                   child: Container(
@@ -114,33 +120,10 @@ class HomeView extends GetView<HomeController> {
                 padding: const EdgeInsets.only(top: 12),
                 child: GridView.count(
                   crossAxisCount: 2,
-                  // shrinkWrap: true,
-                  // physics: const NeverScrollableScrollPhysics(),
                   childAspectRatio: 1.4,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
-                  children: [
-                    CardMenuHome(
-                      title: 'Data Kendaraan',
-                      icon: FeatherIcons.truck,
-                      onTap: () => Get.toNamed('/kendaraan'),
-                    ),
-                    CardMenuHome(
-                      title: 'Data Driver',
-                      icon: FeatherIcons.user,
-                      onTap: () => Get.toNamed('/pengguna'),
-                    ),
-                    CardMenuHome(
-                      title: 'Atur Pesanan',
-                      icon: FeatherIcons.box,
-                      onTap: () => Get.toNamed('/setting-order'),
-                    ),
-                    CardMenuHome(
-                      title: 'Jadwal Pengiriman',
-                      icon: FeatherIcons.calendar,
-                      onTap: () => Get.toNamed('/jadwal-pengiriman'),
-                    ),
-                  ],
+                  children: buildMenuByRole(user?.role ?? 'manajer'),
                 ),
               ),
             ),
@@ -148,6 +131,61 @@ class HomeView extends GetView<HomeController> {
         ),
       ),
     );
+  }
+}
+
+List<Widget> buildMenuByRole(String role) {
+  if (role == 'manajer') {
+    return [
+      CardMenuHome(
+        title: 'Data Kendaraan',
+        icon: FeatherIcons.truck,
+        onTap: () => Get.toNamed('/kendaraan'),
+      ),
+      CardMenuHome(
+        title: 'Data Driver',
+        icon: FeatherIcons.user,
+        onTap: () => Get.toNamed('/pengguna'),
+      ),
+      CardMenuHome(
+        title: 'Atur Pesanan',
+        icon: FeatherIcons.box,
+        onTap: () => Get.toNamed('/setting-order'),
+      ),
+      CardMenuHome(
+        title: 'Jadwal Pengiriman',
+        icon: FeatherIcons.calendar,
+        onTap: () => Get.toNamed('/jadwal-pengiriman'),
+      ),
+    ];
+  } else if (role == 'costumer') {
+    return [
+      CardMenuHome(
+        title: 'Cek Pesanan',
+        icon: FeatherIcons.truck,
+        onTap: () => Get.toNamed('/cek-pesanan')
+      ),
+      CardMenuHome(
+        title: 'Riwayat Pesanan',
+        icon: FeatherIcons.clock,
+        onTap: () => Get.toNamed('/riwayat-pesanan'),
+      ),
+    ];
+  } else if (role == 'driver') {
+    return [
+      CardMenuHome(
+        title: 'Jadwal Saya',
+        icon: FeatherIcons.calendar,
+        onTap: () => Get.toNamed('/jadwal-driver'),
+      ),
+      CardMenuHome(
+        title: 'Status Pengiriman',
+        icon: FeatherIcons.truck,
+        onTap: () => Get.toNamed('/status-pengiriman'),
+      ),
+    ];
+  } else {
+    return [];
   }
 }
 

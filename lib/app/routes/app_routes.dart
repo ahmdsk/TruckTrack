@@ -14,6 +14,7 @@ abstract class Routes {
   static const FORM_SETTING_DELIVERY = _Paths.FORM_SETTING_DELIVERY;
   static const SETTING_ORDER = _Paths.SETTING_ORDER;
   static const JADWAL_PENGIRIMAN = _Paths.JADWAL_PENGIRIMAN;
+  static const JADWAL_DRIVER = _Paths.JADWAL_DRIVER;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const FORM_SETTING_DELIVERY = '/setting-delivery/form';
   static const SETTING_ORDER = '/setting-order';
   static const JADWAL_PENGIRIMAN = '/jadwal-pengiriman';
+  static const JADWAL_DRIVER = '/jadwal-driver';
 }

@@ -8,7 +8,6 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print('SplashController initialized');
 
     // Simulate a delay for splash screen
     Future.delayed(const Duration(seconds: 2), () {
