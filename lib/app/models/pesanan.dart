@@ -27,7 +27,7 @@ class Pesanan {
   final DateTime? tanggalPesanan;
   final String statusPesanan;
   final String jenisBbm;
-  final int volumeBbm;
+  final String volumeBbm;
   final dynamic alamatPengiriman;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -45,7 +45,7 @@ class Pesanan {
       tanggalPesanan: DateTime.tryParse(json["tanggal_pesanan"] ?? ""),
       statusPesanan: json["status_pesanan"] ?? "",
       jenisBbm: json["jenis_bbm"] ?? "",
-      volumeBbm: json["volume_bbm"] ?? 0,
+      volumeBbm: json["volume_bbm"] ?? "0",
       alamatPengiriman: json["alamat_pengiriman"],
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),

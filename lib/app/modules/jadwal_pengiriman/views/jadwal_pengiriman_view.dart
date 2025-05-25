@@ -129,94 +129,107 @@ class CardJadwalPengiriman extends StatelessWidget {
           const Divider(),
 
           // Tujuan Kirim (loop)
-          ...jadwalPengiriman.tujuanKirim.map(
-            (tujuan) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Tujuan #${tujuan.id}',
-                    style: Themes.subTitleStyle.copyWith(fontSize: 16),
+          ...jadwalPengiriman.tujuanKirim.isEmpty
+              ? [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Text(
+                    'Tidak ada tujuan kirim',
+                    style: Themes.bodyStyle.copyWith(
+                      fontSize: 14,
+                      color: Themes.darkColor.withAlpha(90),
+                    ),
                   ),
-                  const SizedBox(height: 6),
-                  Row(
+                ),
+              ]
+              : jadwalPengiriman.tujuanKirim.map(
+                (tujuan) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(
-                        Icons.my_location,
-                        size: 16,
-                        color: Colors.grey,
+                      Text(
+                        'Tujuan #${tujuan.id}',
+                        style: Themes.subTitleStyle.copyWith(fontSize: 16),
                       ),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          'Asal: ${tujuan.alamatAsal}',
-                          style: Themes.bodyStyle.copyWith(
-                            fontSize: 14,
-                            overflow: TextOverflow.fade,
+                      const SizedBox(height: 6),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.my_location,
+                            size: 16,
+                            color: Colors.grey,
                           ),
-                        ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              'Asal: ${tujuan.alamatAsal}',
+                              style: Themes.bodyStyle.copyWith(
+                                fontSize: 14,
+                                overflow: TextOverflow.fade,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      const Icon(Icons.flag, size: 16, color: Colors.red),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          'Tujuan: ${tujuan.alamatTujuan}',
-                          style: Themes.bodyStyle.copyWith(fontSize: 14),
-                          overflow: TextOverflow.fade,
-                        ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          const Icon(Icons.flag, size: 16, color: Colors.red),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              'Tujuan: ${tujuan.alamatTujuan}',
+                              style: Themes.bodyStyle.copyWith(fontSize: 14),
+                              overflow: TextOverflow.fade,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.directions,
-                        size: 16,
-                        color: Colors.blue,
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.directions,
+                            size: 16,
+                            color: Colors.blue,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '${tujuan.jarak} km • ${tujuan.waktuTempuh} menit',
+                            style: Themes.bodyStyle.copyWith(fontSize: 14),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 6),
-                      Text(
-                        '${tujuan.jarak} km • ${tujuan.waktuTempuh} menit',
-                        style: Themes.bodyStyle.copyWith(fontSize: 14),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.check_circle,
-                        size: 16,
-                        color:
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.check_circle,
+                            size: 16,
+                            color:
+                                (tujuan.sudahDilewati == 1)
+                                    ? Themes.successColor
+                                    : Themes.darkColor.withAlpha(90),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
                             (tujuan.sudahDilewati == 1)
-                                ? Themes.successColor
-                                : Themes.darkColor.withAlpha(90),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        (tujuan.sudahDilewati == 1)
-                            ? 'Sudah dilewati'
-                            : 'Belum dilewati',
-                        style: Themes.bodyStyle.copyWith(
-                          color:
-                              (tujuan.sudahDilewati == 1)
-                                  ? Themes.successColor
-                                  : Themes.darkColor.withAlpha(90),
-                        ),
+                                ? 'Sudah dilewati'
+                                : 'Belum dilewati',
+                            style: Themes.bodyStyle.copyWith(
+                              color:
+                                  (tujuan.sudahDilewati == 1)
+                                      ? Themes.successColor
+                                      : Themes.darkColor.withAlpha(90),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
         ],
       ),
     );

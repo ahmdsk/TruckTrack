@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
+import 'package:truck_track/app/controllers/auth_controller.dart';
 import 'package:truck_track/app/models/user.dart';
-import 'package:truck_track/components/snackbar.dart';
 import 'package:truck_track/core/themes/themes.dart';
-import 'package:truck_track/service_locator.dart';
-import 'package:truck_track/services/auth_service.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 import '../controllers/home_controller.dart';
@@ -15,9 +13,7 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
-    final authService = sl<AuthService>();
-    final user = authService.currentUser;
-    debugPrint("User: ${user?.name}");
+    final authController = Get.find<AuthController>();
 
     return Scaffold(
       body: Padding(
@@ -27,116 +23,114 @@ class HomeView extends GetView<HomeController> {
           right: Themes.basePadding.right,
           bottom: Themes.basePadding.bottom,
         ),
-        child: Column(
-          children: [
-            // Header
-            Row(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 18,
-                  children: [
-                    ZoomTapAnimation(
-                      onTap: () => Get.toNamed('/profile'),
-                      child: CircleAvatar(
-                        radius: 28,
-                        backgroundImage: AssetImage(
-                          'assets/images/profile-pict.jpg',
+        child: Obx(() {
+          final user = authController.user.value;
+
+          if (user == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          return Column(
+            children: [
+              // Header
+              Row(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ZoomTapAnimation(
+                        onTap: () => Get.toNamed('/profile'),
+                        child: const CircleAvatar(
+                          radius: 28,
+                          backgroundImage: AssetImage(
+                            'assets/images/profile-pict.jpg',
+                          ),
                         ),
                       ),
+                      const SizedBox(width: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            user.name ?? '-',
+                            style: Themes.titleStyle.copyWith(fontSize: 20),
+                          ),
+                          Text(
+                            user.role?.toUpperCase() ?? '-',
+                            style: Themes.bodyStyle,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  ZoomTapAnimation(
+                    onTap: () async {
+                      await authController.logout();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Themes.primaryColor,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(
+                        FeatherIcons.logOut,
+                        color: Themes.whiteColor,
+                        size: 24,
+                      ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          user?.name ?? '-',
-                          style: Themes.titleStyle.copyWith(fontSize: 20),
-                        ),
-                        Text(
-                          user?.role?.toUpperCase() ?? '-',
-                          style: Themes.bodyStyle,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                // Logout Button
-                ZoomTapAnimation(
-                  onTap: () async {
-                    await authService.logout();
+                  ),
+                ],
+              ),
 
-                    if (!authService.isLoggedIn) {
-                      Get.offAllNamed('/login');
-                    } else {
-                      showCustomSnackbar(
-                        title: 'Gagal',
-                        message: 'Gagal logout',
-                      );
-                    }
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Themes.primaryColor,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      FeatherIcons.logOut,
+              const SizedBox(height: 24),
+              Center(
+                child: Image.asset(
+                  'assets/images/truck.png',
+                  width: 320,
+                  height: 320,
+                ),
+              ),
+              Container(
+                width: 300,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Themes.primaryColor,
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Center(
+                  child: Text(
+                    'Truck Tracking',
+                    style: Themes.titleStyle.copyWith(
                       color: Themes.whiteColor,
-                      size: 24,
+                      fontSize: 20,
                     ),
                   ),
                 ),
-              ],
-            ),
-            // Truck Image
-            Center(
-              child: Image.asset(
-                'assets/images/truck.png',
-                width: 320,
-                height: 320,
               ),
-            ),
-            Container(
-              width: 300,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Themes.primaryColor,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Center(
-                child: Text(
-                  'Truck Tracking',
-                  style: Themes.titleStyle.copyWith(
-                    color: Themes.whiteColor,
-                    fontSize: 20,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1.4,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    children: buildMenuByRole(user),
                   ),
                 ),
               ),
-            ),
-            // Grid View 2 Columns
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1.4,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  children: buildMenuByRole(user!),
-                ),
-              ),
-            ),
-          ],
-        ),
+            ],
+          );
+        }),
       ),
     );
   }
 }
 
-List<Widget> buildMenuByRole(User user) {
-  if (user.role == 'manajer') {
+List<Widget> buildMenuByRole(User? user) {
+  if (user?.role == 'manager') {
     return [
       CardMenuHome(
         title: 'Data Kendaraan',
@@ -159,20 +153,20 @@ List<Widget> buildMenuByRole(User user) {
         onTap: () => Get.toNamed('/jadwal-pengiriman'),
       ),
     ];
-  } else if (user.role == 'costumer') {
+  } else if (user?.role == 'costumer') {
     return [
       CardMenuHome(
         title: 'Cek Pesanan',
         icon: FeatherIcons.truck,
-        onTap: () => Get.toNamed('/cek-pesanan?costumerId=${user.id}'),
+        onTap: () => Get.toNamed('/cek-pesanan?costumerId=${user?.id}'),
       ),
       CardMenuHome(
         title: 'Profile Saya',
         icon: FeatherIcons.user,
-        onTap: () => Get.toNamed('/profile')
+        onTap: () => Get.toNamed('/profile'),
       ),
     ];
-  } else if (user.role == 'driver') {
+  } else if (user?.role == 'driver') {
     return [
       CardMenuHome(
         title: 'Jadwal Saya',
@@ -182,7 +176,7 @@ List<Widget> buildMenuByRole(User user) {
       CardMenuHome(
         title: 'Profile Saya',
         icon: FeatherIcons.user,
-        onTap: () => Get.toNamed('/profile')
+        onTap: () => Get.toNamed('/profile'),
       ),
     ];
   } else {

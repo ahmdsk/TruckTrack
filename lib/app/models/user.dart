@@ -22,7 +22,7 @@ class User {
   final String? noTelp;
   final String? alamat;
   final dynamic noSim;
-  final int? statusAktif;
+  final bool statusAktif;
   final DateTime? createdAt;
   final dynamic updatedAt;
   final dynamic deletedAt;
