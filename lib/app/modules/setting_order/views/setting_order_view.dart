@@ -195,9 +195,9 @@ class PengirimanCard extends StatelessWidget {
                     label: 'Edit',
                     icon: Icons.edit,
                     color: Colors.blueAccent,
-                    onTap: () {
+                    onTap: () async {
                       debugPrint('Edit ${pesanan.noPesanan}');
-                      Get.bottomSheet(
+                      final editPesanan = await Get.bottomSheet(
                         isScrollControlled: true,
                         Container(
                           height: Get.height * 0.85,
@@ -213,6 +213,11 @@ class PengirimanCard extends StatelessWidget {
                           ),
                         ),
                       );
+
+                      if (editPesanan == null) {
+                        final controller = Get.find<SettingOrderController>();
+                        controller.clearForm();
+                      }
                     },
                   ),
                 ),
@@ -275,6 +280,10 @@ class FormKelolaDelivery extends StatelessWidget {
       controller.volumeBBMController.text = pesanan!.volumeBbm.toString();
       controller.alamatPengirimanController.text =
           pesanan!.alamatPengiriman ?? '';
+
+      controller.noSegelAtasController.text = pesanan!.noSegelAtas;
+      controller.noSegelBawahController.text = pesanan!.noSegelBawah;
+      controller.noSuratJalanController.text = pesanan!.noSuratJalan;
     }
 
     return Column(
@@ -334,6 +343,24 @@ class FormKelolaDelivery extends StatelessWidget {
           title: 'Purchase Order',
           hintText: 'Contoh: P1234567890',
           controller: controller.noPesananController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'No. Segel Atas',
+          hintText: 'Contoh: S1234567890',
+          controller: controller.noSegelAtasController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'No. Segel Bawah',
+          hintText: 'Contoh: S0987654321',
+          controller: controller.noSegelBawahController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'No. Surat Jalan',
+          hintText: 'Contoh: SJ1234567890',
+          controller: controller.noSuratJalanController,
         ),
         const SizedBox(height: 20),
         InputField(
