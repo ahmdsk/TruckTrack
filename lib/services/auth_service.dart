@@ -15,6 +15,8 @@ class AuthService {
   final Rxn<User> _user = Rxn<User>();
   User? get currentUser => _user.value;
 
+  String? _accessToken;
+
   void setupInterceptor(VoidCallback onUnauthorized) {
     ApiClient.dio.interceptors.add(
       InterceptorsWrapper(
@@ -28,6 +30,18 @@ class AuthService {
       ),
     );
   }
+
+  Future<void> loadFromStorage() async {
+    final prefs = await SharedPreferences.getInstance();
+    _accessToken = prefs.getString('access_token');
+    final userJson = prefs.getString('user');
+    if (_accessToken != null) {
+      ApiClient.setToken(_accessToken!);
+    }
+    if (userJson != null) {
+      _user.value = User.fromJson(jsonDecode(userJson));
+    }
+  }  
 
   Future<bool> login(String email, String pass) async {
     try {
