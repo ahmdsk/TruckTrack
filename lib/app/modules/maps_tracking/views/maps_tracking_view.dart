@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:truck_track/app/models/tujuan_kirim.dart';
 import 'package:truck_track/core/themes/themes.dart';
+import 'package:truck_track/service_locator.dart';
+import 'package:truck_track/services/auth_service.dart';
 
 import '../controllers/maps_tracking_controller.dart';
 
@@ -11,6 +13,7 @@ class MapsTrackingView extends GetView<MapsTrackingController> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = sl<AuthService>();
     final TujuanKirim tujuanKirim = Get.arguments;
     controller.initTracking(tujuanKirim);
 
@@ -19,7 +22,9 @@ class MapsTrackingView extends GetView<MapsTrackingController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Tracking Pesanan',
+          authService.currentUser?.role == 'driver'
+              ? 'Tracking Pesanan'
+              : 'Tracking Pengiriman',
           style: Themes.subTitleStyle.copyWith(
             color: Themes.darkColor,
             fontSize: 18,

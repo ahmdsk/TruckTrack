@@ -54,7 +54,7 @@ class TujuanKirim {
       alamatTujuan: json["alamat_tujuan"] ?? "-",
       alamatAsal: json["alamat_asal"] ?? "",
       catatan: json["catatan"] ?? "-",
-      sudahDilewati: json["sudah_dilewati"] ?? 0,
+      sudahDilewati: bool.parse(json["sudah_dilewati"].toString()) ? 1 : 0,
       createdAt: json["created_at"],
       updatedAt: json["updated_at"],
       pesanan:

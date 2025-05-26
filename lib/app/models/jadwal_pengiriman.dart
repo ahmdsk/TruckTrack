@@ -41,7 +41,7 @@ class JadwalPengiriman {
       tanggalPesanan: DateTime.tryParse(json["tanggal_pesanan"] ?? ""),
       statusPesanan: json["status_pesanan"] ?? "",
       jenisBbm: json["jenis_bbm"] ?? "",
-      volumeBbm: json["volume_bbm"] ?? 0,
+      volumeBbm: double.parse(json["volume_bbm"].toString()).toInt(),
       alamatPengiriman: json["alamat_pengiriman"] ?? "",
       createdAt: json["created_at"],
       updatedAt: json["updated_at"],

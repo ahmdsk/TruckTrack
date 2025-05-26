@@ -372,6 +372,34 @@ class CardJadwalPengirimanDriver extends StatelessWidget {
                             width: double.infinity,
                             child: ElevatedButton.icon(
                               onPressed: () {
+                                Get.toNamed(
+                                  '/maps-tracking',
+                                  arguments: tujuan,
+                                );
+                              },
+                              icon: Icon(
+                                Icons.map,
+                                size: 16,
+                                color: Themes.whiteColor,
+                              ),
+                              label: Text(
+                                'Lihat Maps',
+                                style: Themes.bodyStyle.copyWith(
+                                  fontSize: 14,
+                                  color: Themes.whiteColor,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: Themes.primaryColor,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                              onPressed: () {
                                 debugPrint(
                                   "Tandai Sudah Dilewati: ${tujuan.id}",
                                 );
