@@ -34,7 +34,7 @@ class TujuanKirim {
   final String alamatTujuan;
   final String alamatAsal;
   final String? catatan;
-  final bool sudahDilewati;
+  final int sudahDilewati;
   final dynamic createdAt;
   final dynamic updatedAt;
   final Pesanan? pesanan;
@@ -54,7 +54,7 @@ class TujuanKirim {
       alamatTujuan: json["alamat_tujuan"] ?? "-",
       alamatAsal: json["alamat_asal"] ?? "",
       catatan: json["catatan"] ?? "-",
-      sudahDilewati: json["sudah_dilewati"] ?? false,
+      sudahDilewati: json["sudah_dilewati"] ?? 0,
       createdAt: json["created_at"],
       updatedAt: json["updated_at"],
       pesanan:

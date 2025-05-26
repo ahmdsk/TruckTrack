@@ -167,6 +167,9 @@ class SettingDeliveryController extends GetxController {
     // Setelah update, refresh daftar pengiriman
     final deliverys = await deliveryService.getDelivery(orderId: orderId);
     listDelivery.assignAll(deliverys);
+
+    // Kosongkan input setelah update
+    clearForm();
   }
 
   // Hapus data pengiriman
@@ -193,6 +196,12 @@ class SettingDeliveryController extends GetxController {
     waktu.value = '';
     hasilAsal.clear();
     hasilTujuan.clear();
+
+    _debounceAsal?.cancel();
+    _debounceTujuan?.cancel();
+
+    asalController.text = '';
+    tujuanController.text = '';
   }
 
   @override

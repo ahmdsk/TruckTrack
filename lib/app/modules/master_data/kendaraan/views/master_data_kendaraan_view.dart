@@ -215,7 +215,7 @@ class ItemListKendaraan extends StatelessWidget {
                     kendaraan.jenisKendaraan,
                     style: Themes.titleStyle.copyWith(
                       color: Themes.primaryColor,
-                      fontSize: 18,
+                      fontSize: 16,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

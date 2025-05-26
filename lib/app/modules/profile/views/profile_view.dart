@@ -26,7 +26,7 @@ class ProfileView extends GetView<ProfileController> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,6 +66,18 @@ class ProfileView extends GetView<ProfileController> {
               initialValue: authService.currentUser?.noTelp ?? '-',
             ),
             const SizedBox(height: 20),
+            authService.currentUser?.role == 'driver'
+                ? Column(
+                  children: [
+                    InputField(
+                      title: 'No. SIM',
+                      hintText: 'Masukkan no. sim anda',
+                      initialValue: authService.currentUser?.noSim ?? '-',
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                )
+                : const SizedBox.shrink(),
             InputField(
               title: 'Alamat',
               hintText: 'Masukkan alamat anda',

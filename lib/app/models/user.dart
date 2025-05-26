@@ -37,7 +37,7 @@ class User {
       noTelp: json["no_telp"],
       alamat: json["alamat"],
       noSim: json["no_sim"],
-      statusAktif: json["status_aktif"],
+      statusAktif: json["status_aktif"] == 1 || json["status_aktif"] == true,
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: json["updated_at"],
       deletedAt: json["deleted_at"],
