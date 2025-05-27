@@ -138,7 +138,7 @@ List<Widget> buildMenuByRole(User? user) {
         onTap: () => Get.toNamed('/kendaraan'),
       ),
       CardMenuHome(
-        title: 'Data Driver',
+        title: 'Data Pengguna',
         icon: FeatherIcons.user,
         onTap: () => Get.toNamed('/pengguna'),
       ),

@@ -185,6 +185,9 @@ class FormKelolaPengguna extends StatelessWidget {
       controller.nameController.text = user!.name ?? '';
       controller.emailController.text = user!.email ?? '';
       controller.selectedRole.value = user!.role ?? '';
+      controller.noSimController.text = user!.noSim ?? '';
+      controller.noTelpController.text = user!.noTelp ?? '';
+      controller.alamatController.text = user!.alamat ?? '';
     }
 
     return Column(
@@ -218,6 +221,18 @@ class FormKelolaPengguna extends StatelessWidget {
           isPassword: true,
         ),
         const SizedBox(height: 20),
+        user?.role == 'driver'
+            ? Column(
+              children: [
+                InputField(
+                  title: 'No. SIM',
+                  hintText: 'Contoh: 1234567890',
+                  controller: controller.noSimController,
+                ),
+                const SizedBox(height: 20),
+              ],
+            )
+            : const SizedBox.shrink(),
         Dropdown<String>(
           title: 'Pilih Role',
           hintText: 'Pilih salah satu role',
@@ -229,6 +244,19 @@ class FormKelolaPengguna extends StatelessWidget {
                     (role) => DropdownMenuItem(value: role, child: Text(role)),
                   )
                   .toList(),
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'No. Telp',
+          hintText: 'Contoh: 081234567890',
+          controller: controller.noTelpController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'Alamat',
+          hintText: 'Contoh: Jl. Raya No. 123, Jakarta',
+          controller: controller.alamatController,
+          largeText: true,
         ),
         const SizedBox(height: 20),
         SizedBox(

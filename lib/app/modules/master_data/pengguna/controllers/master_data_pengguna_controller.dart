@@ -15,6 +15,10 @@ class MasterDataPenggunaController extends GetxController {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final noSimController = TextEditingController();
+  final noTelpController = TextEditingController();
+  final alamatController = TextEditingController();
+
   final roleOptions = [
     'manager',
     'driver',
@@ -25,7 +29,7 @@ class MasterDataPenggunaController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
 
-    final users = await userService.getAllByRoles(UserRole.driver);
+    final users = await userService.getAllUsers();
     listUsers.assignAll(users);
   }
 
@@ -36,6 +40,9 @@ class MasterDataPenggunaController extends GetxController {
       'email': emailController.text,
       'password': passwordController.text,
       'role': selectedRole.value,
+      'no_sim': noSimController.text, // Tambahkan no_sim jika diperlukan
+      'no_telp': noTelpController.text, // Tambahkan no_telp jika diperlukan
+      'alamat': alamatController.text // Tambahkan alamat jika diperlukan
     };
 
     await userService.addUser(newUser);
@@ -45,7 +52,7 @@ class MasterDataPenggunaController extends GetxController {
       message: 'Pengguna berhasil ditambahkan',
     );
     // refresh list
-    final users = await userService.getAllByRoles(UserRole.driver);
+    final users = await userService.getAllUsers();
     listUsers.assignAll(users);
 
     // Clear semua controller
@@ -60,7 +67,7 @@ class MasterDataPenggunaController extends GetxController {
       message: 'Pengguna berhasil dihapus',
     );
     // refresh list
-    final users = await userService.getAllByRoles(UserRole.driver);
+    final users = await userService.getAllUsers();
     listUsers.assignAll(users);
   }
 
@@ -71,6 +78,9 @@ class MasterDataPenggunaController extends GetxController {
       'email': emailController.text,
       'password': passwordController.text,
       'role': selectedRole.value,
+      'no_sim': noSimController.text, // Tambahkan no_sim jika diperlukan
+      'no_telp': noTelpController.text, // Tambahkan no_telp jika diperlukan
+      'alamat': alamatController.text // Tambahkan alamat jika diperlukan
     };
 
     await userService.updateUser(id, updatedUser);
@@ -80,7 +90,7 @@ class MasterDataPenggunaController extends GetxController {
       message: 'Pengguna berhasil diupdate',
     );
     // refresh list
-    final users = await userService.getAllByRoles(UserRole.driver);
+    final users = await userService.getAllUsers();
     listUsers.assignAll(users);
 
     // Clear semua controller

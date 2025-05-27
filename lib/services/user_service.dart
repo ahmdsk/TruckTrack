@@ -21,6 +21,18 @@ class UserService {
     return userList;
   }
 
+  Future<List<User>> getAllUsers() async {
+    final response = await ApiClient.get('/users');
+
+    // Parse the response data into a list of User objects
+    final List<User> userList =
+        (response!.data['data'] as List)
+            .map((item) => User.fromJson(item))
+            .toList();
+
+    return userList;
+  }
+
   Future<void> addUser(Map<String, dynamic> user) async {
     final response = await ApiClient.post('/users', data: user);
     debugPrint('Response: ${response!.data}, Data yang dikirim: $user');
