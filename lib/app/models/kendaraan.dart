@@ -7,10 +7,12 @@ class Kendaraan {
     required this.noPolisi,
     required this.jenisKendaraan,
     required this.kapasitasTangki,
-    required this.noSegel,
     required this.createdAt,
     required this.updatedAt,
     required this.driver,
+    required this.noSegelAtas,
+    required this.noSegelBawah,
+    required this.noSuratJalan,
   });
 
   final int id;
@@ -18,10 +20,12 @@ class Kendaraan {
   final String noPolisi;
   final String jenisKendaraan;
   final String kapasitasTangki;
-  final String noSegel;
   final DateTime? createdAt;
   final dynamic updatedAt;
   final User? driver;
+  final String noSegelAtas;
+  final String noSegelBawah;
+  final String noSuratJalan;
 
   factory Kendaraan.fromJson(Map<String, dynamic> json) {
     return Kendaraan(
@@ -30,10 +34,12 @@ class Kendaraan {
       noPolisi: json["no_polisi"] ?? "",
       jenisKendaraan: json["jenis_kendaraan"] ?? "",
       kapasitasTangki: json["kapasitas_tangki"] ?? "",
-      noSegel: json["no_segel"] ?? "",
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: json["updated_at"],
       driver: json["driver"] == null ? null : User.fromJson(json["driver"]),
+      noSegelAtas: json["no_segel_atas"] ?? "",
+      noSegelBawah: json["no_segel_bawah"] ?? "",
+      noSuratJalan: json["no_surat_jalan"] ?? "",
     );
   }
 }

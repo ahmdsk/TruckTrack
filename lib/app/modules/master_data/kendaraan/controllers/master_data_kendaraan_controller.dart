@@ -19,7 +19,9 @@ class MasterDataKendaraanController extends GetxController {
   final noPolisiController = TextEditingController();
   final jenisKendaraanController = TextEditingController();
   final kapasitasTangkiController = TextEditingController();
-  final noSegelController = TextEditingController();
+  final noSegelAtasController= TextEditingController();
+  final noSegelBawahController= TextEditingController();
+  final noSuratJalanController = TextEditingController();
 
   @override
   Future<void> onInit() async {
@@ -41,7 +43,9 @@ class MasterDataKendaraanController extends GetxController {
       'no_polisi': noPolisiController.text,
       'jenis_kendaraan': jenisKendaraanController.text,
       'kapasitas_tangki': kapasitasTangkiController.text,
-      'no_segel': noSegelController.text,
+      'no_segel_atas': noSegelAtasController.text,
+      'no_segel_bawah': noSegelBawahController.text,
+      'no_surat_jalan': noSuratJalanController.text,
     };
 
     await kendaraanService.addKendaraan(newKendaraan);
@@ -75,7 +79,9 @@ class MasterDataKendaraanController extends GetxController {
       'no_polisi': noPolisiController.text,
       'jenis_kendaraan': jenisKendaraanController.text,
       'kapasitas_tangki': kapasitasTangkiController.text,
-      'no_segel': noSegelController.text,
+      'no_segel_atas': noSegelAtasController.text,
+      'no_segel_bawah': noSegelBawahController.text,
+      'no_surat_jalan': noSuratJalanController.text,
     };
 
     await kendaraanService.updateKendaraan(id.toString(), updatedKendaraan);
@@ -95,6 +101,8 @@ class MasterDataKendaraanController extends GetxController {
     noPolisiController.clear();
     jenisKendaraanController.clear();
     kapasitasTangkiController.clear();
-    noSegelController.clear();
+    noSegelAtasController.clear();
+    noSegelBawahController.clear();
+    noSuratJalanController.clear();
   }
 }

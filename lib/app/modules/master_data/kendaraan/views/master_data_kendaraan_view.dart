@@ -85,7 +85,10 @@ class FormKelolaKendaraan extends StatelessWidget {
       controller.noPolisiController.text = kendaraan!.noPolisi;
       controller.jenisKendaraanController.text = kendaraan!.jenisKendaraan;
       controller.kapasitasTangkiController.text = kendaraan!.kapasitasTangki;
-      controller.noSegelController.text = kendaraan!.noSegel;
+      
+      controller.noSegelAtasController.text = kendaraan!.noSegelAtas;
+      controller.noSegelBawahController.text = kendaraan!.noSegelBawah;
+      controller.noSuratJalanController.text = kendaraan!.noSuratJalan;
     }
 
     return Column(
@@ -139,9 +142,21 @@ class FormKelolaKendaraan extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         InputField(
-          title: 'No. Segel',
-          hintText: 'Contoh: 1234567890',
-          controller: controller.noSegelController,
+          title: 'No. Segel Atas',
+          hintText: 'Contoh: S1234567890',
+          controller: controller.noSegelAtasController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'No. Segel Bawah',
+          hintText: 'Contoh: S0987654321',
+          controller: controller.noSegelBawahController,
+        ),
+        const SizedBox(height: 20),
+        InputField(
+          title: 'No. Surat Jalan',
+          hintText: 'Contoh: SJ1234567890',
+          controller: controller.noSuratJalanController,
         ),
         const SizedBox(height: 20),
         SizedBox(

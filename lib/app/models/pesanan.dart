@@ -12,9 +12,6 @@ class Pesanan {
     required this.jenisBbm,
     required this.volumeBbm,
     required this.alamatPengiriman,
-    required this.noSegelAtas,
-    required this.noSegelBawah,
-    required this.noSuratJalan,
     required this.createdAt,
     required this.updatedAt,
     required this.costumer,
@@ -33,9 +30,6 @@ class Pesanan {
   final String jenisBbm;
   final int volumeBbm;
   final dynamic alamatPengiriman;
-  final String noSegelAtas;
-  final String noSegelBawah;
-  final String noSuratJalan;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final User? costumer;
@@ -54,9 +48,6 @@ class Pesanan {
       jenisBbm: json["jenis_bbm"] ?? "",
       volumeBbm: double.parse(json["volume_bbm"].toString()).toInt(),
       alamatPengiriman: json["alamat_pengiriman"],
-      noSegelAtas: json["no_segel_atas"] ?? "",
-      noSegelBawah: json["no_segel_bawah"] ?? "",
-      noSuratJalan: json["no_surat_jalan"] ?? "",
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
       costumer:

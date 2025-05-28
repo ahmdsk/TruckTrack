@@ -22,9 +22,6 @@ class SettingOrderController extends GetxController {
   final selectedDriver = Rxn<User>();
   final selectedCostumer = Rxn<User>();
   final noPesananController = TextEditingController();
-  final noSegelAtasController= TextEditingController();
-  final noSegelBawahController= TextEditingController();
-  final noSuratJalanController = TextEditingController();
   final jenisBBMController = TextEditingController();
   final volumeBBMController = TextEditingController();
   final alamatPengirimanController = TextEditingController();
@@ -54,9 +51,6 @@ class SettingOrderController extends GetxController {
       'jenis_bbm': jenisBBMController.text,
       'volume_bbm': volumeBBMController.text,
       'alamat_pengiriman': alamatPengirimanController.text,
-      'no_segel_atas': noSegelAtasController.text,
-      'no_segel_bawah': noSegelBawahController.text,
-      'no_surat_jalan': noSuratJalanController.text,
     };
 
     await orderService.addPesanan(newPesanan);
@@ -87,10 +81,6 @@ class SettingOrderController extends GetxController {
     jenisBBMController.clear();
     volumeBBMController.clear();
     alamatPengirimanController.clear();
-
-    noSegelAtasController.clear();
-    noSegelBawahController.clear();
-    noSuratJalanController.clear();
   }
 
   // Method untuk mengupdate pesanan
@@ -102,9 +92,6 @@ class SettingOrderController extends GetxController {
       'jenis_bbm': jenisBBMController.text,
       'volume_bbm': volumeBBMController.text,
       'alamat_pengiriman': alamatPengirimanController.text,
-      'no_segel_atas': noSegelAtasController.text,
-      'no_segel_bawah': noSegelBawahController.text,
-      'no_surat_jalan': noSuratJalanController.text,
     };
 
     await orderService.updatePesanan(id.toString(), updatedPesanan);
