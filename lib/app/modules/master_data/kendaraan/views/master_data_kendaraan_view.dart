@@ -84,7 +84,6 @@ class FormKelolaKendaraan extends StatelessWidget {
       );
       controller.noPolisiController.text = kendaraan!.noPolisi;
       controller.jenisKendaraanController.text = kendaraan!.jenisKendaraan;
-      controller.kapasitasTangkiController.text = kendaraan!.kapasitasTangki;
       
       controller.noSegelAtasController.text = kendaraan!.noSegelAtas;
       controller.noSegelBawahController.text = kendaraan!.noSegelBawah;
@@ -133,12 +132,6 @@ class FormKelolaKendaraan extends StatelessWidget {
           title: 'Jenis Kendaraan',
           hintText: 'Contoh: Truck, Mobil Box',
           controller: controller.jenisKendaraanController,
-        ),
-        const SizedBox(height: 20),
-        InputField(
-          title: 'Kapasitas Tangki',
-          hintText: 'Contoh: 1000',
-          controller: controller.kapasitasTangkiController,
         ),
         const SizedBox(height: 20),
         InputField(

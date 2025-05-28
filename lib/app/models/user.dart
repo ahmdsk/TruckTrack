@@ -8,6 +8,7 @@ class User {
     required this.noTelp,
     required this.alamat,
     required this.noSim,
+    required this.noNpwp,
     required this.statusAktif,
     required this.createdAt,
     required this.updatedAt,
@@ -22,6 +23,7 @@ class User {
   final String? noTelp;
   final String? alamat;
   final dynamic noSim;
+  final String noNpwp;
   final bool statusAktif;
   final DateTime? createdAt;
   final dynamic updatedAt;
@@ -37,6 +39,7 @@ class User {
       noTelp: json["no_telp"],
       alamat: json["alamat"],
       noSim: json["no_sim"],
+      noNpwp: json["no_npwp"] ?? "",
       statusAktif: json["status_aktif"] == 1 || json["status_aktif"] == true,
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: json["updated_at"],

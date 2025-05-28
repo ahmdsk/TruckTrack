@@ -78,6 +78,18 @@ class ProfileView extends GetView<ProfileController> {
                   ],
                 )
                 : const SizedBox.shrink(),
+            authService.currentUser?.role == 'costumer'
+                ? Column(
+                  children: [
+                    InputField(
+                      title: 'No. NPWP',
+                      hintText: 'Masukkan No. NPWP anda',
+                      initialValue: authService.currentUser?.noNpwp ?? '-',
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                )
+                : const SizedBox.shrink(),
             InputField(
               title: 'Alamat',
               hintText: 'Masukkan alamat anda',

@@ -18,7 +18,6 @@ class MasterDataKendaraanController extends GetxController {
   final selectedDriver = Rxn<User>();
   final noPolisiController = TextEditingController();
   final jenisKendaraanController = TextEditingController();
-  final kapasitasTangkiController = TextEditingController();
   final noSegelAtasController= TextEditingController();
   final noSegelBawahController= TextEditingController();
   final noSuratJalanController = TextEditingController();
@@ -42,7 +41,6 @@ class MasterDataKendaraanController extends GetxController {
       'id_driver': selectedDriver.value?.id,
       'no_polisi': noPolisiController.text,
       'jenis_kendaraan': jenisKendaraanController.text,
-      'kapasitas_tangki': kapasitasTangkiController.text,
       'no_segel_atas': noSegelAtasController.text,
       'no_segel_bawah': noSegelBawahController.text,
       'no_surat_jalan': noSuratJalanController.text,
@@ -78,7 +76,6 @@ class MasterDataKendaraanController extends GetxController {
       'id_driver': selectedDriver.value?.id,
       'no_polisi': noPolisiController.text,
       'jenis_kendaraan': jenisKendaraanController.text,
-      'kapasitas_tangki': kapasitasTangkiController.text,
       'no_segel_atas': noSegelAtasController.text,
       'no_segel_bawah': noSegelBawahController.text,
       'no_surat_jalan': noSuratJalanController.text,
@@ -100,7 +97,6 @@ class MasterDataKendaraanController extends GetxController {
     selectedDriver.value = null;
     noPolisiController.clear();
     jenisKendaraanController.clear();
-    kapasitasTangkiController.clear();
     noSegelAtasController.clear();
     noSegelBawahController.clear();
     noSuratJalanController.clear();
