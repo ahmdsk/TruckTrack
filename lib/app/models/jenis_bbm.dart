@@ -1,0 +1,23 @@
+class JenisBbm {
+    JenisBbm({
+        required this.id,
+        required this.nama,
+        required this.createdAt,
+        required this.updatedAt,
+    });
+
+    final int id;
+    final String nama;
+    final DateTime? createdAt;
+    final DateTime? updatedAt;
+
+    factory JenisBbm.fromJson(Map<String, dynamic> json){ 
+        return JenisBbm(
+            id: json["id"] ?? 0,
+            nama: json["nama"] ?? "",
+            createdAt: DateTime.tryParse(json["created_at"] ?? ""),
+            updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
+        );
+    }
+
+}

@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:truck_track/app/data/api_client.dart';
 import 'package:truck_track/services/delivery_service.dart';
 import 'package:truck_track/services/jadwal_pengiriman_service.dart';
+import 'package:truck_track/services/jenis_bbm_service.dart';
+import 'package:truck_track/services/jenis_kendaraan_service.dart';
 import 'package:truck_track/services/kendaraan_service.dart';
 import 'package:truck_track/services/order_service.dart';
 import 'package:truck_track/services/user_service.dart';
@@ -20,6 +22,8 @@ Future<void> setupLocator() async {
   // Register AuthService (custom service wrapper)
   sl.registerSingleton<AuthService>(AuthService(sl())); // dio & prefs
   sl.registerSingleton<KendaraanService>(KendaraanService());
+  sl.registerSingleton<JenisKendaraanService>(JenisKendaraanService());
+  sl.registerSingleton<JenisBBMService>(JenisBBMService());
   sl.registerSingleton<UserService>(UserService());
   sl.registerSingleton<DeliveryService>(DeliveryService());
   sl.registerSingleton<OrderService>(OrderService());

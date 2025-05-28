@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
+import 'package:truck_track/app/models/jenis_kendaraan.dart';
 import 'package:truck_track/app/models/kendaraan.dart';
 import 'package:truck_track/app/models/user.dart';
 import 'package:truck_track/components/confirmation_dialog.dart';
@@ -82,9 +83,11 @@ class FormKelolaKendaraan extends StatelessWidget {
       controller.selectedDriver.value = controller.listDrivers.firstWhereOrNull(
         (e) => e.id == kendaraan!.idDriver,
       );
+
+      controller.selectedJenisKendaraan.value = controller.listJenisKendaraan
+          .firstWhereOrNull((e) => e.nama == kendaraan!.jenisKendaraan);
+
       controller.noPolisiController.text = kendaraan!.noPolisi;
-      controller.jenisKendaraanController.text = kendaraan!.jenisKendaraan;
-      
       controller.noSegelAtasController.text = kendaraan!.noSegelAtas;
       controller.noSegelBawahController.text = kendaraan!.noSegelBawah;
       controller.noSuratJalanController.text = kendaraan!.noSuratJalan;
@@ -128,11 +131,23 @@ class FormKelolaKendaraan extends StatelessWidget {
           controller: controller.noPolisiController,
         ),
         const SizedBox(height: 20),
-        InputField(
-          title: 'Jenis Kendaraan',
-          hintText: 'Contoh: Truck, Mobil Box',
-          controller: controller.jenisKendaraanController,
-        ),
+        Obx(() {
+          final jenisKendaraan = controller.listJenisKendaraan;
+          return Dropdown<JenisKendaraan>(
+            title: "Jenis Kendaraan",
+            hintText: "Pilih jenis kendaraan",
+            value: controller.selectedJenisKendaraan.value,
+            onChanged: (val) => controller.selectedJenisKendaraan.value = val,
+            items: jenisKendaraan
+                .map(
+                  (jenis) => DropdownMenuItem(
+                    value: jenis,
+                    child: Text(jenis.nama),
+                  ),
+                )
+                .toList(),
+          );
+        }),
         const SizedBox(height: 20),
         InputField(
           title: 'No. Segel Atas',

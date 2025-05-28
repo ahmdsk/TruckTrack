@@ -3,6 +3,8 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:truck_track/app/models/jenis_bbm.dart';
+import 'package:truck_track/app/models/kendaraan.dart';
 import 'package:truck_track/app/models/pesanan.dart';
 import 'package:truck_track/app/models/user.dart';
 import 'package:truck_track/components/action_button_card.dart';
@@ -147,7 +149,16 @@ class PengirimanCard extends StatelessWidget {
                   color: Themes.darkColor.withAlpha(120),
                 ),
                 SizedBox(width: 8),
-                Text('${pesanan.jenisBbm} • ${pesanan.volumeBbm} Liter'),
+                Expanded(
+                  child: Text(
+                    '${pesanan.jenisBbm} • ${pesanan.volumeBbm} Liter',
+                    style: Themes.bodyStyle.copyWith(
+                      color: Themes.darkColor.withAlpha(150),
+                      fontSize: 14,
+                      overflow: TextOverflow.fade,
+                    ),
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 10),
@@ -276,7 +287,11 @@ class FormKelolaDelivery extends StatelessWidget {
       controller.selectedCostumer.value = controller.listCostumers
           .firstWhereOrNull((e) => e.id == pesanan!.costumerId);
       controller.noPesananController.text = pesanan!.noPesanan;
-      controller.jenisBBMController.text = pesanan!.jenisBbm;
+      controller.selectedBBM.value = controller.listBBM.firstWhereOrNull(
+        (e) => e.nama == pesanan!.jenisBbm,
+      );
+      controller.selectedKendaraan.value = controller.listKendaraan
+          .firstWhereOrNull((e) => e.id == pesanan!.kendaraanId);
       controller.volumeBBMController.text = pesanan!.volumeBbm.toString();
       controller.alamatPengirimanController.text =
           pesanan!.alamatPengiriman ?? '';
@@ -341,11 +356,43 @@ class FormKelolaDelivery extends StatelessWidget {
           controller: controller.noPesananController,
         ),
         const SizedBox(height: 20),
-        InputField(
-          title: 'Jenis BBM',
-          hintText: 'Contoh: Solar, Pertalite',
-          controller: controller.jenisBBMController,
-        ),
+        Obx(() {
+          final jenisBbm = controller.listBBM;
+          return Dropdown<JenisBbm>(
+            title: "Pilih Jenis BBM",
+            hintText: "Pilih salah satu jenis bbm",
+            value: controller.selectedBBM.value,
+            onChanged: (val) => controller.selectedBBM.value = val,
+            items:
+                jenisBbm
+                    .map(
+                      (driver) => DropdownMenuItem(
+                        value: driver,
+                        child: Text(driver.nama),
+                      ),
+                    )
+                    .toList(),
+          );
+        }),
+        const SizedBox(height: 20),
+        Obx(() {
+          final jenisKendaraan = controller.listKendaraan;
+          return Dropdown<Kendaraan>(
+            title: "Pilih Kendaraan",
+            hintText: "Pilih salah satu kendaraan",
+            value: controller.selectedKendaraan.value,
+            onChanged: (val) => controller.selectedKendaraan.value = val,
+            items:
+                jenisKendaraan
+                    .map(
+                      (driver) => DropdownMenuItem(
+                        value: driver,
+                        child: Text(driver.jenisKendaraan),
+                      ),
+                    )
+                    .toList(),
+          );
+        }),
         const SizedBox(height: 20),
         InputField(
           title: 'Volume BBM',

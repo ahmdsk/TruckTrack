@@ -7,6 +7,7 @@ class Pesanan {
     required this.costumerId,
     required this.driverId,
     required this.managerId,
+    required this.kendaraanId,
     required this.tanggalPesanan,
     required this.statusPesanan,
     required this.jenisBbm,
@@ -25,6 +26,7 @@ class Pesanan {
   final int costumerId;
   final int driverId;
   final int managerId;
+  final int kendaraanId;
   final DateTime? tanggalPesanan;
   final String statusPesanan;
   final String jenisBbm;
@@ -41,6 +43,7 @@ class Pesanan {
       id: json["id"] ?? 0,
       noPesanan: json["no_pesanan"] ?? "",
       costumerId: json["costumer_id"] ?? 0,
+      kendaraanId: json["kendaraan_id"] ?? 0,
       driverId: json["driver_id"] ?? 0,
       managerId: json["manager_id"] ?? 0,
       tanggalPesanan: DateTime.tryParse(json["tanggal_pesanan"] ?? ""),
