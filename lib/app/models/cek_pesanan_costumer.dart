@@ -1,3 +1,4 @@
+import 'package:truck_track/app/models/kendaraan.dart';
 import 'package:truck_track/app/models/tujuan_kirim.dart';
 import 'package:truck_track/app/models/user.dart';
 
@@ -19,6 +20,7 @@ class CekPesananCostumer {
     required this.driver,
     required this.manager,
     required this.tujuanKirim,
+    required this.kendaraan
   });
 
   final int id;
@@ -37,6 +39,7 @@ class CekPesananCostumer {
   final User? driver;
   final User? manager;
   final List<TujuanKirim> tujuanKirim;
+  final Kendaraan? kendaraan;
 
   factory CekPesananCostumer.fromJson(Map<String, dynamic> json) {
     return CekPesananCostumer(
@@ -62,6 +65,9 @@ class CekPesananCostumer {
               : List<TujuanKirim>.from(
                 json["tujuan_kirim"]!.map((x) => TujuanKirim.fromJson(x)),
               ),
+      kendaraan: json["kendaraan"] == null
+          ? null
+          : Kendaraan.fromJson(json["kendaraan"]),
     );
   }
 }

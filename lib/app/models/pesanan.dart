@@ -1,3 +1,4 @@
+import 'package:truck_track/app/models/kendaraan.dart';
 import 'package:truck_track/app/models/user.dart';
 
 class Pesanan {
@@ -18,7 +19,7 @@ class Pesanan {
     required this.costumer,
     required this.driver,
     required this.manager,
-    
+    required this.kendaraan,
   });
 
   final int id;
@@ -37,6 +38,7 @@ class Pesanan {
   final User? costumer;
   final User? driver;
   final User? manager;
+  final Kendaraan? kendaraan;
 
   factory Pesanan.fromJson(Map<String, dynamic> json) {
     return Pesanan(
@@ -56,8 +58,11 @@ class Pesanan {
       costumer:
           json["costumer"] == null ? null : User.fromJson(json["costumer"]),
       driver: json["driver"] == null ? null : User.fromJson(json["driver"]),
-      manager:
-          json["manager"] == null ? null : User.fromJson(json["manager"]),
+      manager: json["manager"] == null ? null : User.fromJson(json["manager"]),
+      kendaraan:
+          json["kendaraan"] == null
+              ? null
+              : Kendaraan.fromJson(json["kendaraan"]),
     );
   }
 }

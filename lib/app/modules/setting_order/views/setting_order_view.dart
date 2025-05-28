@@ -177,6 +177,20 @@ class PengirimanCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
 
+            // Kendaraan
+            Row(
+              children: [
+                Icon(
+                  Icons.directions_car,
+                  size: 18,
+                  color: Themes.darkColor.withAlpha(120),
+                ),
+                SizedBox(width: 8),
+                Expanded(child: Text(pesanan.kendaraan?.jenisKendaraan ?? '-')),
+              ],
+            ),
+            const SizedBox(height: 10),
+
             // Driver dan Customer
             Row(
               children: [

@@ -126,9 +126,74 @@ class CardPesananCostumer extends StatelessWidget {
                 color: Themes.primaryColor,
               ),
               const SizedBox(width: 8),
-              Text(
-                '${pesananCostumer.jenisBbm} - ${pesananCostumer.volumeBbm} liter',
-                style: Themes.bodyStyle.copyWith(fontSize: 14),
+              Expanded(
+                child: Text(
+                  '${pesananCostumer.jenisBbm} - ${pesananCostumer.volumeBbm} liter',
+                  style: Themes.bodyStyle.copyWith(
+                    fontSize: 14,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+
+          // Kendaraan
+          Row(
+            children: [
+              Icon(
+                Icons.directions_car,
+                size: 18,
+                color: Themes.primaryColor,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  pesananCostumer.kendaraan?.jenisKendaraan ?? '-',
+                  style: Themes.bodyStyle.copyWith(
+                    fontSize: 14,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+
+          // No Atas & No Bawah Segel
+          Row(
+            children: [
+              Icon(
+                Icons.confirmation_number,
+                size: 18,
+                color: Themes.primaryColor,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  '${pesananCostumer.kendaraan?.noSegelAtas ?? '-'} / ${pesananCostumer.kendaraan?.noSegelBawah ?? '-'}',
+                  style: Themes.bodyStyle.copyWith(fontSize: 14),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          
+          // No Surat Jalan
+          Row(
+            children: [
+              Icon(
+                Icons.document_scanner,
+                size: 18,
+                color: Themes.primaryColor,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  pesananCostumer.kendaraan?.noSuratJalan ?? '-',
+                  style: Themes.bodyStyle.copyWith(fontSize: 14),
+                ),
               ),
             ],
           ),
