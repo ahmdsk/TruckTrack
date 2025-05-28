@@ -119,7 +119,10 @@ class CardJadwalPengiriman extends StatelessWidget {
               Expanded(
                 child: Text(
                   jadwalPengiriman.alamatPengiriman,
-                  style: Themes.bodyStyle.copyWith(fontSize: 14),
+                  style: Themes.bodyStyle.copyWith(
+                    fontSize: 14,
+                    overflow: TextOverflow.fade,
+                  ),
                 ),
               ),
             ],
@@ -131,13 +134,19 @@ class CardJadwalPengiriman extends StatelessWidget {
           // Tujuan Kirim (loop)
           ...jadwalPengiriman.tujuanKirim.isEmpty
               ? [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Text(
-                    'Tidak ada tujuan kirim',
-                    style: Themes.bodyStyle.copyWith(
-                      fontSize: 14,
-                      color: Themes.darkColor.withAlpha(90),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      jadwalPengiriman.statusPesanan == 'Selesai'
+                          ? 'Pengiriman selesai'
+                          : 'Tidak ada tujuan kirim',
+                      style: Themes.bodyStyle.copyWith(
+                        fontSize: 14,
+                        color: Themes.darkColor.withAlpha(90),
+                        overflow: TextOverflow.fade,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),

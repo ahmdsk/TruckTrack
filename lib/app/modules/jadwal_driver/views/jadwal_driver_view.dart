@@ -320,7 +320,7 @@ class CardJadwalPengirimanDriver extends StatelessWidget {
                                 size: 16,
                               ),
                               label: Text(
-                                "Berikan Catatan",
+                                "Catatan Pengiriman",
                                 style: Themes.bodyStyle.copyWith(fontSize: 14),
                               ),
                               style: OutlinedButton.styleFrom(
@@ -423,7 +423,7 @@ class CardJadwalPengirimanDriver extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               label: Text(
-                                "Tandai Sudah Dilewati",
+                                "Pengiriman Selesai",
                                 style: Themes.bodyStyle.copyWith(
                                   fontSize: 14,
                                   color: Themes.whiteColor,
