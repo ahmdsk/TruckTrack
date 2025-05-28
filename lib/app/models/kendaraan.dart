@@ -6,7 +6,6 @@ class Kendaraan {
     required this.idDriver,
     required this.noPolisi,
     required this.jenisKendaraan,
-    required this.kapasitasTangki,
     required this.createdAt,
     required this.updatedAt,
     required this.driver,
@@ -19,7 +18,6 @@ class Kendaraan {
   final int idDriver;
   final String noPolisi;
   final String jenisKendaraan;
-  final String kapasitasTangki;
   final DateTime? createdAt;
   final dynamic updatedAt;
   final User? driver;
@@ -33,7 +31,6 @@ class Kendaraan {
       idDriver: json["id_driver"] ?? 0,
       noPolisi: json["no_polisi"] ?? "",
       jenisKendaraan: json["jenis_kendaraan"] ?? "",
-      kapasitasTangki: json["kapasitas_tangki"] ?? "",
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: json["updated_at"],
       driver: json["driver"] == null ? null : User.fromJson(json["driver"]),

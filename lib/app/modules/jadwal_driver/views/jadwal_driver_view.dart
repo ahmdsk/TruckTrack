@@ -153,7 +153,7 @@ class CardJadwalPengirimanDriver extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 14),
 
           // Alamat Pengiriman
           Row(
@@ -163,12 +163,78 @@ class CardJadwalPengirimanDriver extends StatelessWidget {
               Expanded(
                 child: Text(
                   jadwalPengiriman.alamatPengiriman,
-                  style: Themes.bodyStyle.copyWith(fontSize: 14),
+                  style: Themes.bodyStyle.copyWith(
+                    fontSize: 14,
+                    overflow: TextOverflow.fade,
+                  ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 12),
+
+          Text(
+            'Informasi Kendaraan',
+            style: Themes.titleStyle.copyWith(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+
+          // Kendaraan
+          Row(
+            children: [
+              Icon(Icons.directions_car, size: 18, color: Themes.primaryColor),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  jadwalPengiriman.kendaraan?.jenisKendaraan ??
+                      'Tidak ada kendaraan yang ditentukan',
+                  style: Themes.bodyStyle.copyWith(
+                    fontSize: 14,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+
+          // No Segel Atas - Bawah
+          Row(
+            children: [
+              Icon(Icons.confirmation_number, size: 18, color: Themes.primaryColor),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  '${jadwalPengiriman.kendaraan?.noSegelAtas} / ${jadwalPengiriman.kendaraan?.noSegelBawah}',
+                  style: Themes.bodyStyle.copyWith(
+                    fontSize: 14,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+
+          // No Surat Jalan
+          Row(
+            children: [
+              Icon(Icons.document_scanner, size: 18, color: Themes.primaryColor),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  jadwalPengiriman.kendaraan?.noSuratJalan ?? 'Tidak ada surat jalan',
+                  style: Themes.bodyStyle.copyWith(
+                    fontSize: 14,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+              ),
+            ],
+          ),
 
           const Divider(),
 
