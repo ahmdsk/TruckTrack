@@ -20,6 +20,7 @@ class Pesanan {
     required this.driver,
     required this.manager,
     required this.kendaraan,
+    required this.telahDiterima,
   });
 
   final int id;
@@ -39,6 +40,7 @@ class Pesanan {
   final User? driver;
   final User? manager;
   final Kendaraan? kendaraan;
+  final int telahDiterima;
 
   factory Pesanan.fromJson(Map<String, dynamic> json) {
     return Pesanan(
@@ -63,6 +65,7 @@ class Pesanan {
           json["kendaraan"] == null
               ? null
               : Kendaraan.fromJson(json["kendaraan"]),
+      telahDiterima: json["telah_diterima"] ?? 0,
     );
   }
 }

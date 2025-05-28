@@ -17,4 +17,13 @@ class CekPesananController extends GetxController {
     );
     listPesananCostumers.assignAll(jadwalPengiriman);
   }
+
+  Future<void> konfirmasiPesanan(String pesananId) async {
+    await orderService.konfirmasiPesanan(pesananId);
+    // Optionally, refresh the list after confirmation
+    final jadwalPengiriman = await orderService.getCekPesananCostumer(
+      Get.parameters['costumerId'] ?? '',
+    );
+    listPesananCostumers.assignAll(jadwalPengiriman);
+  }
 }

@@ -20,7 +20,8 @@ class CekPesananCostumer {
     required this.driver,
     required this.manager,
     required this.tujuanKirim,
-    required this.kendaraan
+    required this.kendaraan,
+    required this.telahDiterima
   });
 
   final int id;
@@ -40,6 +41,7 @@ class CekPesananCostumer {
   final User? manager;
   final List<TujuanKirim> tujuanKirim;
   final Kendaraan? kendaraan;
+  final int telahDiterima;
 
   factory CekPesananCostumer.fromJson(Map<String, dynamic> json) {
     return CekPesananCostumer(
@@ -68,6 +70,7 @@ class CekPesananCostumer {
       kendaraan: json["kendaraan"] == null
           ? null
           : Kendaraan.fromJson(json["kendaraan"]),
+      telahDiterima: json["telah_diterima"].toString() == "1" ? 1 : 0
     );
   }
 }

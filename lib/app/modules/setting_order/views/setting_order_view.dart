@@ -7,6 +7,7 @@ import 'package:truck_track/app/models/jenis_bbm.dart';
 import 'package:truck_track/app/models/kendaraan.dart';
 import 'package:truck_track/app/models/pesanan.dart';
 import 'package:truck_track/app/models/user.dart';
+import 'package:truck_track/app/modules/jadwal_driver/views/jadwal_driver_view.dart';
 import 'package:truck_track/components/action_button_card.dart';
 import 'package:truck_track/components/confirmation_dialog.dart';
 import 'package:truck_track/components/dropdown.dart';
@@ -207,6 +208,116 @@ class PengirimanCard extends StatelessWidget {
                 ),
               ],
             ),
+
+            // Kendaraan
+          Row(
+            children: [
+              Icon(Icons.directions_car, size: 18, color: Themes.primaryColor),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  pesanan.kendaraan?.jenisKendaraan ?? '-',
+                  style: Themes.bodyStyle.copyWith(
+                    fontSize: 14,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+
+          // No Atas & No Bawah Segel
+          Row(
+            children: [
+              Icon(
+                Icons.confirmation_number,
+                size: 18,
+                color: Themes.primaryColor,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  '${pesanan.kendaraan?.noSegelAtas ?? '-'} / ${pesanan.kendaraan?.noSegelBawah ?? '-'}',
+                  style: Themes.bodyStyle.copyWith(fontSize: 14),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+
+          // No Surat Jalan
+          Row(
+            children: [
+              Icon(
+                Icons.document_scanner,
+                size: 18,
+                color: Themes.primaryColor,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  pesanan.kendaraan?.noSuratJalan ?? '-',
+                  style: Themes.bodyStyle.copyWith(fontSize: 14),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+
+          // Status Pengiriman
+          Row(
+            children: [
+              Icon(
+                Icons.delivery_dining,
+                size: 18,
+                color:
+                    (pesanan.statusPesanan == 'selesai')
+                        ? Themes.successColor
+                        : Themes.primaryColor,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                formatMessageStatusPesanan(pesanan.statusPesanan),
+                style: Themes.bodyStyle.copyWith(
+                  fontSize: 14,
+                  color:
+                      (pesanan.statusPesanan == 'selesai')
+                          ? Themes.successColor
+                          : Themes.primaryColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+
+          // Status Diterima
+          Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                size: 18,
+                color:
+                    (pesanan.telahDiterima == 1)
+                        ? Themes.successColor
+                        : Themes.darkColor,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                pesanan.telahDiterima == 1
+                    ? "Pesanan Sudah Diterima"
+                    : "Pesanan Belum Diterima",
+                style: Themes.bodyStyle.copyWith(
+                  fontSize: 14,
+                  color:
+                      (pesanan.telahDiterima == 1)
+                          ? Themes.successColor
+                          : Themes.darkColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
 
             const SizedBox(height: 20),
 

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:truck_track/app/models/cek_pesanan_costumer.dart';
 import 'package:truck_track/app/modules/jadwal_driver/views/jadwal_driver_view.dart';
+import 'package:truck_track/components/confirmation_dialog.dart';
 import 'package:truck_track/components/not_found_data.dart';
 import 'package:truck_track/core/themes/themes.dart';
 
@@ -142,11 +143,7 @@ class CardPesananCostumer extends StatelessWidget {
           // Kendaraan
           Row(
             children: [
-              Icon(
-                Icons.directions_car,
-                size: 18,
-                color: Themes.primaryColor,
-              ),
+              Icon(Icons.directions_car, size: 18, color: Themes.primaryColor),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -179,7 +176,7 @@ class CardPesananCostumer extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          
+
           // No Surat Jalan
           Row(
             children: [
@@ -219,6 +216,34 @@ class CardPesananCostumer extends StatelessWidget {
                       (pesananCostumer.statusPesanan == 'selesai')
                           ? Themes.successColor
                           : Themes.primaryColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+
+          // Status Diterima
+          Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                size: 18,
+                color:
+                    (pesananCostumer.telahDiterima == 1)
+                        ? Themes.successColor
+                        : Themes.darkColor,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                pesananCostumer.telahDiterima == 1
+                    ? "Pesanan Sudah Diterima"
+                    : "Pesanan Belum Diterima",
+                style: Themes.bodyStyle.copyWith(
+                  fontSize: 14,
+                  color:
+                      (pesananCostumer.telahDiterima == 1)
+                          ? Themes.successColor
+                          : Themes.darkColor,
                 ),
               ),
             ],
@@ -394,6 +419,47 @@ class CardPesananCostumer extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 backgroundColor: Themes.primaryColor,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                if (pesananCostumer.telahDiterima == 0) {
+                  ConfirmationDialog.show(
+                    title: 'Konfirmasi Pesanan Diterima',
+                    description:
+                        'Apakah anda yakin pesanan ini sudah diterima?',
+                    onConfirm: () {
+                      final controller = Get.find<CekPesananController>();
+                      controller.konfirmasiPesanan(
+                        pesananCostumer.id.toString(),
+                      );
+                    },
+                  );
+                }
+              },
+              icon: Icon(
+                Icons.check_circle,
+                size: 18,
+                color: Themes.whiteColor,
+              ),
+              label: Text(
+                // "Pesanan Diterima",
+                pesananCostumer.telahDiterima == 1
+                    ? "Pesanan Sudah Diterima"
+                    : "Konfirmasi Pesanan Diterima",
+                style: Themes.bodyStyle.copyWith(
+                  fontSize: 14,
+                  color: Themes.whiteColor,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                backgroundColor: pesananCostumer.telahDiterima == 1
+                    ? Themes.successColor
+                    : Themes.darkColor,
               ),
             ),
           ),

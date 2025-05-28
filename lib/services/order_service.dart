@@ -41,4 +41,11 @@ class OrderService {
 
     return cekPesananList;
   }
+
+  Future<void> konfirmasiPesanan(String id) async {
+    final response = await ApiClient.post('/pesanan/konfirmasi/$id', data: {
+      'telah_diterima': true,
+    });
+    return response?.data;
+  }
 }
