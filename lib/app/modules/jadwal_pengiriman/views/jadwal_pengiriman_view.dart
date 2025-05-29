@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:truck_track/app/models/jadwal_pengiriman.dart';
+import 'package:truck_track/app/modules/jadwal_driver/views/jadwal_driver_view.dart';
 import 'package:truck_track/components/not_found_data.dart';
 import 'package:truck_track/core/themes/themes.dart';
 
@@ -94,6 +95,52 @@ class CardJadwalPengiriman extends StatelessWidget {
           ),
           const SizedBox(height: 8),
 
+          // Driver & Kendaraan
+          Row(
+            children: [
+              Icon(
+                Icons.person,
+                size: 18,
+                color: Themes.primaryColor,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  '${jadwalPengiriman.driver?.name ?? 'Belum di Set'} - (${jadwalPengiriman.kendaraan?.jenisKendaraan ?? '-'})',
+                  style: Themes.bodyStyle.copyWith(
+                    fontSize: 14,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          
+          // Status Pesanan
+          Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                size: 18,
+                color: jadwalPengiriman.statusPesanan == 'selesai'
+                    ? Themes.successColor
+                    : Themes.darkColor,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                formatMessageStatusPesanan(jadwalPengiriman.statusPesanan),
+                style: Themes.bodyStyle.copyWith(
+                  fontSize: 14,
+                  color: jadwalPengiriman.statusPesanan == 'selesai'
+                      ? Themes.successColor
+                      : Themes.darkColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+
           // Jenis & Volume BBM
           Row(
             children: [
@@ -103,9 +150,14 @@ class CardJadwalPengiriman extends StatelessWidget {
                 color: Themes.primaryColor,
               ),
               const SizedBox(width: 8),
-              Text(
-                '${jadwalPengiriman.jenisBbm} - ${jadwalPengiriman.volumeBbm} liter',
-                style: Themes.bodyStyle.copyWith(fontSize: 14),
+              Expanded(
+                child: Text(
+                  '${jadwalPengiriman.jenisBbm} - ${jadwalPengiriman.volumeBbm} liter',
+                  style: Themes.bodyStyle.copyWith(
+                    fontSize: 14,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
               ),
             ],
           ),

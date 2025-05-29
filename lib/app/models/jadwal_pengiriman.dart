@@ -1,5 +1,6 @@
 import 'package:truck_track/app/models/kendaraan.dart';
 import 'package:truck_track/app/models/tujuan_kirim.dart';
+import 'package:truck_track/app/models/user.dart';
 
 class JadwalPengiriman {
   JadwalPengiriman({
@@ -17,6 +18,7 @@ class JadwalPengiriman {
     required this.updatedAt,
     required this.tujuanKirim,
     required this.kendaraan,
+    required this.driver,
   });
 
   final int id;
@@ -33,6 +35,7 @@ class JadwalPengiriman {
   final dynamic updatedAt;
   final List<TujuanKirim> tujuanKirim;
   final Kendaraan? kendaraan;
+  final User? driver;
 
   factory JadwalPengiriman.fromJson(Map<String, dynamic> json) {
     return JadwalPengiriman(
@@ -56,6 +59,9 @@ class JadwalPengiriman {
               ),
       kendaraan: json["kendaraan"] != null
           ? Kendaraan.fromJson(json["kendaraan"])
+          : null,
+      driver: json["driver"] != null
+          ? User.fromJson(json["driver"])
           : null,
     );
   }
