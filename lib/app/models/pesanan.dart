@@ -65,7 +65,7 @@ class Pesanan {
           json["kendaraan"] == null
               ? null
               : Kendaraan.fromJson(json["kendaraan"]),
-      telahDiterima: json["telah_diterima"] ?? 0,
+      telahDiterima: json["sudah_dilewati"].toString() == "1" ? 1 : 0,
     );
   }
 }

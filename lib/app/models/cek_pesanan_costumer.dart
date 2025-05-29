@@ -70,7 +70,7 @@ class CekPesananCostumer {
       kendaraan: json["kendaraan"] == null
           ? null
           : Kendaraan.fromJson(json["kendaraan"]),
-      telahDiterima: json["telah_diterima"].toString() == "1" ? 1 : 0
+      telahDiterima: json["telah_diterima"] == true ? 1 : 0,
     );
   }
 }
